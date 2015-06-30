@@ -4,7 +4,7 @@ Ongoing folder structure:
 
 Ongoing
 
-|
+|  
 
 |_Arslan Senki
 
@@ -12,7 +12,7 @@ Ongoing
 
 | |_[HorribleSubs] Arslan Senki - 02 [720p].mkv
 
-|
+|  
 
 |_Knights of Sidonia S2 - The Ninth Planet Crusade
 
@@ -20,6 +20,6 @@ Ongoing
 
 | |_[Underwater] Knights of Sidonia S2 - The Ninth Planet Crusade - 02 (720p) [A631962C].mkv
 
-|
+|  
 
 |...
