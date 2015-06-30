@@ -13,6 +13,7 @@
     * ...
  * ...
 
+
 ## Folder path examples 
 
 1. uTorrent.exe Path: 
@@ -23,3 +24,8 @@
  * C:\Anime\Ongoing
 3. Torrent files folder:
  * C:\torrents
+
+
+## Requirements 
+
+* .NET Framework 4.5
