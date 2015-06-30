@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Anime_Downloader
+﻿namespace Anime_Downloader
 {
-    class Deluge
+    internal class Deluge
     {
-        //
+        
     }
 }

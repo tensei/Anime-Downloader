@@ -55,6 +55,7 @@ namespace Anime_Downloader
             var childThread = new Thread(childref);
             childThread.IsBackground = true;
             childThread.Start();
+            textBlock.Text = string.Format("Examples\n1. uTorrent.exe Path: {0} \t* C:\\Program Files (x86)\\uTorrent\\uTorrent.exe {0} \t* or {0} \t* C:\\Users\\tensei\\AppData\\Roaming\\uTorrent\\uTorrent.exe {0} 2.Ongoing folder: {0} \t* C:\\Anime\\Ongoing {0} 3.Torrent files folder: {0} \t* C:\\torrents", "\n");
         }
 
         private void CheckNow()
