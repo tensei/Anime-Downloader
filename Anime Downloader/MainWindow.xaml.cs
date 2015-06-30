@@ -37,7 +37,6 @@ namespace Anime_Downloader
         public string PathuTorrent = Settings.Default.PathuTorrent;//@"D:\dummy\uTorrent.exe";
         public string PathDownloads = Settings.Default.PathDownloads;// @"D:\Dummy\torrents";
         public List<string> groups = new List<string> { "[FFF", "[Ani", "[Viv", "[Ase", "[JnM", "[Com" };
-        private WebClient client = new WebClient();
         uTorrent uTorrent = new uTorrent();
         
         public MainWindow()
@@ -89,6 +88,7 @@ namespace Anime_Downloader
                 }
                 else
                 {
+                    WebClient client = new WebClient();
                     Settings.Default.StatusLabel = "Status: Checking in " + Settings.Default.RefreshTimer + " seconds.";
                     Torrents = new List<string>(Directory.EnumerateFiles(PathDownloads));
                     GetOnGoing();
@@ -148,6 +148,7 @@ namespace Anime_Downloader
                         }
                         Settings.Default.RefreshCounter++;
                         Settings.Default.Save();
+                        client.Dispose();
                     }
                     Settings.Default.RefreshTimer = Settings.Default.RefreshWaitTime;
                 }
@@ -156,8 +157,16 @@ namespace Anime_Downloader
 
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
-                DragMove();
+            try
+            {
+                if (e.ChangedButton == MouseButton.Left)
+                    DragMove();
+            }
+            catch (Exception)
+            {
+                //
+            }
+            
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
@@ -253,13 +262,14 @@ namespace Anime_Downloader
         private void listBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             try
-            {
-                var itemselected = ((ListBoxItem)listBox.SelectedItem);
-                Process.Start(itemselected.Tag.ToString());
+            {   
+                var itemselected = ((ListBoxItem) listBox.SelectedItem);
+                if(!itemselected.Tag.Equals("blank"))
+                    Process.Start(itemselected.Tag.ToString());
             }
-            catch (Exception a)
+            catch (Exception)
             {
-                MessageBox.Show(a.Message);
+               // MessageBox.Show(a.Message);
             }
         }
     }
