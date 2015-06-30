@@ -1,6 +1,6 @@
 # Anime-Downloader
 
-Ongoing folder structure:
+## Ongoing folder structure:
 
 * Ongoing
  * Arslan Senki
