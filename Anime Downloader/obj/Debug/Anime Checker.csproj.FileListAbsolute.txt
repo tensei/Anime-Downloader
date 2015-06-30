@@ -1,0 +1,28 @@
+D:\Development\visual studio 2015\Projects\Anime Checker\Anime Checker\bin\Debug\Anime Checker.exe.config
+D:\Development\visual studio 2015\Projects\Anime Checker\Anime Checker\bin\Debug\Anime Checker.exe
+D:\Development\visual studio 2015\Projects\Anime Checker\Anime Checker\bin\Debug\Anime Checker.pdb
+D:\Development\visual studio 2015\Projects\Anime Checker\Anime Checker\obj\Debug\MainWindow.g.cs
+D:\Development\visual studio 2015\Projects\Anime Checker\Anime Checker\obj\Debug\App.g.cs
+D:\Development\visual studio 2015\Projects\Anime Checker\Anime Checker\obj\Debug\Anime Checker_MarkupCompile.cache
+D:\Development\visual studio 2015\Projects\Anime Checker\Anime Checker\obj\Debug\Anime Checker_MarkupCompile.lref
+D:\Development\visual studio 2015\Projects\Anime Checker\Anime Checker\obj\Debug\MainWindow.baml
+D:\Development\visual studio 2015\Projects\Anime Checker\Anime Checker\obj\Debug\Anime Checker.g.resources
+D:\Development\visual studio 2015\Projects\Anime Checker\Anime Checker\obj\Debug\Anime_Checker.Properties.Resources.resources
+D:\Development\visual studio 2015\Projects\Anime Checker\Anime Checker\obj\Debug\Anime Checker.csproj.GenerateResource.Cache
+D:\Development\visual studio 2015\Projects\Anime Checker\Anime Checker\obj\Debug\Anime Checker.exe
+D:\Development\visual studio 2015\Projects\Anime Checker\Anime Checker\obj\Debug\Anime Checker.pdb
+D:\Development\visual studio 2015\Projects\Anime Checker\Anime Checker\obj\Debug\Anime Checker.csprojResolveAssemblyReference.cache
+D:\Development\visual studio 2015\Projects\Anime Downloader\Anime Checker\bin\Debug\Anime Checker.exe.config
+D:\Development\visual studio 2015\Projects\Anime Downloader\Anime Checker\obj\Debug\Anime Checker.exe
+D:\Development\visual studio 2015\Projects\Anime Downloader\Anime Checker\obj\Debug\Anime Checker.pdb
+D:\Development\visual studio 2015\Projects\Anime Downloader\Anime Checker\bin\Debug\Anime Checker.exe
+D:\Development\visual studio 2015\Projects\Anime Downloader\Anime Checker\bin\Debug\Anime Checker.pdb
+D:\Development\visual studio 2015\Projects\Anime Downloader\Anime Checker\obj\Debug\Anime Checker.csprojResolveAssemblyReference.cache
+D:\Development\visual studio 2015\Projects\Anime Downloader\Anime Checker\obj\Debug\MainWindow.g.cs
+D:\Development\visual studio 2015\Projects\Anime Downloader\Anime Checker\obj\Debug\App.g.cs
+D:\Development\visual studio 2015\Projects\Anime Downloader\Anime Checker\obj\Debug\Anime Checker_MarkupCompile.cache
+D:\Development\visual studio 2015\Projects\Anime Downloader\Anime Checker\obj\Debug\Anime Checker_MarkupCompile.lref
+D:\Development\visual studio 2015\Projects\Anime Downloader\Anime Checker\obj\Debug\MainWindow.baml
+D:\Development\visual studio 2015\Projects\Anime Downloader\Anime Checker\obj\Debug\Anime Checker.g.resources
+D:\Development\visual studio 2015\Projects\Anime Downloader\Anime Checker\obj\Debug\Anime_Checker.Properties.Resources.resources
+D:\Development\visual studio 2015\Projects\Anime Downloader\Anime Checker\obj\Debug\Anime Checker.csproj.GenerateResource.Cache

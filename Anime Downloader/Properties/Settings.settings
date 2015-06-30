@@ -1,0 +1,27 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Anime_Downloader.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="PathuTorrent" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\dummy</Value>
+    </Setting>
+    <Setting Name="PathDownloads" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\dummy</Value>
+    </Setting>
+    <Setting Name="PathOngoing" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\dummy</Value>
+    </Setting>
+    <Setting Name="RefreshCounter" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="RefreshTimer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="StatusLabel" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Status: Starting...</Value>
+    </Setting>
+    <Setting Name="RefreshWaitTime" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">60</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

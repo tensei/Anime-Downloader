@@ -1,0 +1,3 @@
+D:\Development\visual studio 2015\Projects\Anime Downloader\Anime Downloader\bin\Debug\Anime Checker.exe.config
+D:\Development\visual studio 2015\Projects\Anime Downloader\Anime Downloader\obj\Debug\Anime Checker.exe
+D:\Development\visual studio 2015\Projects\Anime Downloader\Anime Downloader\obj\Debug\Anime Checker.pdb
