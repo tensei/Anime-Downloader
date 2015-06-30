@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.ServiceModel.Syndication;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace Anime_Downloader
@@ -14,9 +11,9 @@ namespace Anime_Downloader
     {
         public List<string> Get_feed_titles()
         {
-            List<string> titleurl = new List<string>();
+            var titleurl = new List<string>();
             string xml;
-            string url = "http://www.nyaa.se/?page=rss&cats=1_37";
+            var url = "http://www.nyaa.se/?page=rss&cats=1_37";
             using (var webClient = new WebClient())
             {
                 xml = Encoding.UTF8.GetString(webClient.DownloadData(url));
@@ -27,7 +24,7 @@ namespace Anime_Downloader
             var feed = SyndicationFeed.Load(reader);
             foreach (var mangs in feed.Items)
             {
-                titleurl.Add(mangs.Title.Text+ "[]" + mangs.Links[0].Uri.AbsoluteUri);
+                titleurl.Add(mangs.Title.Text + "[]" + mangs.Links[0].Uri.AbsoluteUri);
             }
             return titleurl;
         }
