@@ -26,7 +26,9 @@ namespace Anime_Downloader
         public string PathOngoing = Settings.Default.PathOngoing; //@"D:\dummy\Ongoing";
         public string PathuTorrent = Settings.Default.PathuTorrent; //@"D:\dummy\uTorrent.exe";
         public List<string> Torrents = new List<string>();
+        private readonly Deluge deluge = new Deluge();
         private readonly nyaase neko = new nyaase();
+        private readonly List<string> processes = new List<string>();
         private readonly uTorrent uTorrent = new uTorrent();
 
         public MainWindow()
@@ -55,7 +57,23 @@ namespace Anime_Downloader
             var childThread = new Thread(childref);
             childThread.IsBackground = true;
             childThread.Start();
-            textBlock.Text = string.Format("Examples\n1. uTorrent.exe Path: {0} \t* C:\\Program Files (x86)\\uTorrent\\uTorrent.exe {0} \t* or {0} \t* C:\\Users\\tensei\\AppData\\Roaming\\uTorrent\\uTorrent.exe {0} 2.Ongoing folder: {0} \t* C:\\Anime\\Ongoing {0} 3.Torrent files folder: {0} \t* C:\\torrents", "\n");
+            textBlock.Text =
+                string.Format(
+                    "Examples\n1. uTorrent.exe Path: {0} \t* C:\\Program Files (x86)\\uTorrent\\uTorrent.exe {0} \t* or {0} \t* D:\\Program Files (x86)\\Deluge\\deluge-console.exe {0} 2.Ongoing folder: {0} \t* C:\\Anime\\Ongoing {0} 3.Torrent files folder: {0} \t* C:\\torrents",
+                    "\n");
+            FillProcessList();
+        }
+
+        private void FillProcessList()
+        {
+            processes.Clear();
+            var processlist = Process.GetProcesses();
+
+            foreach (var theprocess in processlist)
+            {
+                var pname = theprocess.ProcessName;
+                processes.Add(pname);
+            }
         }
 
         private void CheckNow()
@@ -96,6 +114,7 @@ namespace Anime_Downloader
                     }
                     if (rssitems.Count > 1)
                     {
+                        FillProcessList();
                         GetOnGoing();
                         foreach (var item in rssitems)
                         {
@@ -119,7 +138,33 @@ namespace Anime_Downloader
                                                 }));
                                         //download file and add it to torrent downloader
                                         client.DownloadFile(new Uri(link), PathDownloads + @"\" + title + @".torrent");
-                                        uTorrent.open(ongoing, title, filename);
+                                        if (Settings.Default.PathuTorrent.ToLower().Contains("utorrent") &&
+                                            processes.Contains("uTorrent"))
+                                        {
+                                            if (processes.Contains("uTorrent"))
+                                            {
+                                                uTorrent.open(ongoing, title, filename);
+                                            }
+                                            else
+                                            {
+                                                Process.Start(Settings.Default.PathuTorrent);
+                                                Thread.Sleep(1500);
+                                                uTorrent.open(ongoing, title, filename);
+                                            }
+                                        }
+                                        else if (Settings.Default.PathuTorrent.ToLower().Contains("deluge-console.exe"))
+                                        {
+                                            if (processes.Contains("deluged"))
+                                            {
+                                                deluge.open(ongoing, title, filename);
+                                            }
+                                            else
+                                            {
+                                                Process.Start(Settings.Default.PathuTorrent.Replace("-console", "d"));
+                                                Thread.Sleep(1500);
+                                                deluge.open(ongoing, title, filename);
+                                            }
+                                        }
                                         done.Add(title);
                                         Thread.Sleep(200);
                                     }
@@ -139,7 +184,33 @@ namespace Anime_Downloader
                                         //download file and add it to torrent downloader
                                         client.DownloadFile(new Uri(link),
                                             PathDownloads + @"\" + title + @".torrent");
-                                        uTorrent.open(ongoing, title, filename);
+                                        if (Settings.Default.PathuTorrent.ToLower().Contains("utorrent") &&
+                                            processes.Contains("uTorrent"))
+                                        {
+                                            if (processes.Contains("uTorrent"))
+                                            {
+                                                uTorrent.open(ongoing, title, filename);
+                                            }
+                                            else
+                                            {
+                                                Process.Start(Settings.Default.PathuTorrent);
+                                                Thread.Sleep(1500);
+                                                uTorrent.open(ongoing, title, filename);
+                                            }
+                                        }
+                                        else if (Settings.Default.PathuTorrent.ToLower().Contains("deluge-console.exe"))
+                                        {
+                                            if (processes.Contains("deluged"))
+                                            {
+                                                deluge.open(ongoing, title, filename);
+                                            }
+                                            else
+                                            {
+                                                Process.Start(Settings.Default.PathuTorrent.Replace("-console", "d"));
+                                                Thread.Sleep(1500);
+                                                deluge.open(ongoing, title, filename);
+                                            }
+                                        }
                                         done.Add(title);
                                         Thread.Sleep(200);
                                     }
@@ -200,10 +271,14 @@ namespace Anime_Downloader
                 var foldername = dir.Substring(dir.LastIndexOf("\\") + 1);
 
                 var diranimefiles = new List<string>(Directory.EnumerateFiles(dir));
-                var nameFile = diranimefiles[0].Split(new[] {"\\"}, StringSplitOptions.None);
-                if (!nameFile.Contains(".sync"))
-                    //listBox.Items.Add(dir.Substring(dir.LastIndexOf("\\") + 1));
-                    ongoing[nameFile.Last().Split(new[] {"-"}, StringSplitOptions.None)[0]] = foldername;
+                foreach (var f in diranimefiles)
+                {
+                    var nameFile = f.Split(new[] {"\\"}, StringSplitOptions.None).Last();
+                    var filn = nameFile.Split(new[] { "-" }, StringSplitOptions.None)[0];
+                    if (!f.Contains(".sync") && !ongoing.Keys.Contains(filn))
+                        //listBox.Items.Add(dir.Substring(dir.LastIndexOf("\\") + 1));
+                        ongoing[filn] = foldername;
+                }
                 foreach (var file in diranimefiles)
                 {
                     if (file.Contains(".mkv"))

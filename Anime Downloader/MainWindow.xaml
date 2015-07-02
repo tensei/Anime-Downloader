@@ -24,15 +24,15 @@
 			        Foreground="#FFB6B6B6" Padding="0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right"
 			        Click="SettingBtn_Click" />
         </StackPanel>
-        <Label x:Name="label2" Content="uTorrent.exe Path" HorizontalAlignment="Left" Margin="10,34,0,0"
+        <Label x:Name="label2" Content="Torrent program Path" HorizontalAlignment="Left" Margin="10,36,0,0"
 		       VerticalAlignment="Top" Foreground="#FFB6B6B6" />
         <Label x:Name="label4" Content="Torrent files folder" HorizontalAlignment="Left" Margin="10,96,0,0"
 		       VerticalAlignment="Top" Foreground="#FFB6B6B6" Height="25" />
         <Label x:Name="label3" Content="OnGoing folder" HorizontalAlignment="Left" Margin="10,65,0,0" VerticalAlignment="Top"
 		       Foreground="#FFB6B6B6" />
-        <TextBox x:Name="uTorrentTextBox" HorizontalAlignment="Left" Height="23" Margin="118,38,0,0" TextWrapping="Wrap"
-		         VerticalAlignment="Top" Width="397" Background="#FFB6B6B6" Padding="0,2,0,0"
-		         TextChanged="uTorrentTextBox_TextChanged" />
+        <TextBox x:Name="uTorrentTextBox" HorizontalAlignment="Left" Height="23" Margin="140,38,0,0" TextWrapping="Wrap"
+		         VerticalAlignment="Top" Width="375" Background="#FFB6B6B6" Padding="0,2,0,0"
+		         TextChanged="uTorrentTextBox_TextChanged" ToolTip="uTorrent or Deluge" />
         <TextBox x:Name="OnGoingTextBox" HorizontalAlignment="Left" Height="23" Margin="118,67,0,0" TextWrapping="Wrap"
 		         VerticalAlignment="Top" Width="397" Background="#FFB6B6B6" Padding="0,2,0,0"
 		         TextChanged="OnGoingTextBox_TextChanged" />
@@ -47,7 +47,7 @@
         <Label x:Name="label5" Content="seconds." HorizontalAlignment="Left" Margin="176,124,0,0" VerticalAlignment="Top"
 		       Foreground="#FFB6B6B6" Height="25" />
 
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="165" Width="505" Foreground="#FFB6B6B6"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="165" Width="505" Foreground="#FFB6B6B6" FontSize="9.333"/>
         <ListBox x:Name="listBox" Margin="1,25" MouseDoubleClick="listBox_MouseDoubleClick" Visibility="Collapsed">
             <ListBoxItem Content="Downloaded" IsEnabled="False" Tag="blank" />
             <Separator IsEnabled="False" Tag="blank" />
