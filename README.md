@@ -19,7 +19,7 @@
 1. uTorrent.exe Path: 
  * C:\Program Files (x86)\uTorrent\uTorrent.exe
  * or
- * C:\Users\tensei\AppData\Roaming\uTorrent\uTorrent.exe
+ * D:\Program Files (x86)\Deluge\deluge-console.exe
 2. Ongoing folder:
  * C:\Anime\Ongoing
 3. Torrent files folder:
