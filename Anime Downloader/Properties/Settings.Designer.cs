@@ -26,36 +26,36 @@ namespace Anime_Downloader.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("C:\\dummy\\*exe")]
-        public string PathuTorrent {
+        public string TorrentClient {
             get {
-                return ((string)(this["PathuTorrent"]));
+                return ((string)(this["TorrentClient"]));
             }
             set {
-                this["PathuTorrent"] = value;
+                this["TorrentClient"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("C:\\dummy")]
-        public string PathDownloads {
+        public string Torrent_Files {
             get {
-                return ((string)(this["PathDownloads"]));
+                return ((string)(this["TorrentFiles"]));
             }
             set {
-                this["PathDownloads"] = value;
+                this["TorrentFiles"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("C:\\dummy")]
-        public string PathOngoing {
+        public string OngoingFolder {
             get {
-                return ((string)(this["PathOngoing"]));
+                return ((string)(this["OngoingFolder"]));
             }
             set {
-                this["PathOngoing"] = value;
+                this["OngoingFolder"] = value;
             }
         }
         

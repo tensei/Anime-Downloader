@@ -30,37 +30,34 @@
 		       VerticalAlignment="Top" Foreground="#FFB6B6B6" Height="25" />
         <Label x:Name="label3" Content="OnGoing folder" HorizontalAlignment="Left" Margin="10,65,0,0" VerticalAlignment="Top"
 		       Foreground="#FFB6B6B6" />
-        <TextBox x:Name="uTorrentTextBox" Height="23" Margin="140,38,10,0" TextWrapping="Wrap"
-		         VerticalAlignment="Top" Background="#FFB6B6B6" Padding="0,2,0,0"
-		         TextChanged="uTorrentTextBox_TextChanged" ToolTip="uTorrent or Deluge" />
-        <TextBox x:Name="OnGoingTextBox" Height="23" Margin="140,67,10,0" TextWrapping="Wrap"
-		         VerticalAlignment="Top" Background="#FFB6B6B6" Padding="0,2,0,0"
-		         TextChanged="OnGoingTextBox_TextChanged" />
-        <TextBox x:Name="TorrentsFolder" Height="23" Margin="140,96,10,0" TextWrapping="Wrap"
-		         VerticalAlignment="Top" Background="#FFB6B6B6" Padding="0,2,0,0"
-		         TextChanged="TorrentsFolder_TextChanged" />
-        <Label x:Name="label6" Content="Refresh time" HorizontalAlignment="Left" Margin="10,124,0,0" VerticalAlignment="Top"
+        <TextBox x:Name="TorrentClientTextBox" Height="23" Margin="140,38,10,0" TextWrapping="Wrap"
+		         VerticalAlignment="Top" Background="#FFB6B6B6" Padding="0,2,0,0" ToolTip="uTorrent or Deluge" />
+        <TextBox x:Name="OnGoingFolderTextBox" Height="23" Margin="140,67,10,0" TextWrapping="Wrap"
+		         VerticalAlignment="Top" Background="#FFB6B6B6" Padding="0,2,0,0" />
+        <TextBox x:Name="TorrentFilesTextBox" Height="23" Margin="140,96,10,0" TextWrapping="Wrap"
+		         VerticalAlignment="Top" Background="#FFB6B6B6" Padding="0,2,0,0" />
+        <Label x:Name="label6" Content="Refresh time" HorizontalAlignment="Left" Margin="10,156,0,0" VerticalAlignment="Top"
 		       Foreground="#FFB6B6B6" Height="25" />
         <TextBox x:Name="RefreshTimebox" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Left" Height="23"
-		         Margin="140,126,0,0" VerticalAlignment="Top" Width="56" Background="#FFB6B6B6" Padding="0,2,0,0"
-		         TextChanged="RefreshTimebox_TextChanged" />
-        <Label x:Name="label5" Content="seconds." HorizontalAlignment="Left" Margin="201,124,0,0" VerticalAlignment="Top"
+		         Margin="140,158,0,0" VerticalAlignment="Top" Width="56" Background="#FFB6B6B6" Padding="0,2,0,0" />
+        <Label x:Name="label5" Content="seconds." HorizontalAlignment="Left" Margin="201,156,0,0" VerticalAlignment="Top"
 		       Foreground="#FFB6B6B6" Height="25" />
         <TextBox x:Name="DebugTextbox" Height="23" Margin="10,0,10,31" TextWrapping="Wrap"
         	VerticalAlignment="Bottom" Background="#FFB6B6B6" Padding="0,2,0,0" AcceptsReturn="True" AcceptsTab="True" />
-        <Label x:Name="label6_Copy" Content="Groups" HorizontalAlignment="Left" Margin="10,154,0,0" VerticalAlignment="Top"
+        <Label x:Name="label6_Copy" Content="Groups" HorizontalAlignment="Left" Margin="10,186,0,0" VerticalAlignment="Top"
         	Foreground="#FFB6B6B6" Height="25" />
-        <TextBox x:Name="GroupsTextBox" Height="23" Margin="140,156,96,0" TextWrapping="Wrap"
+        <TextBox x:Name="GroupsTextBox" Height="23" Margin="140,188,10,0" TextWrapping="Wrap"
         	VerticalAlignment="Top" Background="#FFB6B6B6" Padding="0,2,0,0" />
-        <Label x:Name="label6_Copy1" Content="Resolution" HorizontalAlignment="Left" Margin="10,184,0,0" VerticalAlignment="Top"
+        <Label x:Name="label6_Copy1" Content="Resolution" HorizontalAlignment="Left" Margin="10,216,0,0" VerticalAlignment="Top"
         	Foreground="#FFB6B6B6" Height="25" />
-        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="140,187,0,0" VerticalAlignment="Top" Width="120" Background="#FFB6B6B6" IsReadOnly="True" SelectionChanged="comboBox_SelectionChanged" BorderThickness="0" VerticalContentAlignment="Center">
+        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="140,219,0,0" VerticalAlignment="Top" Width="120" Background="#FFB6B6B6" IsReadOnly="True" BorderThickness="0" VerticalContentAlignment="Center">
             <ComboBoxItem Content="480p" BorderThickness="0" Background="#FFB6B6B6" HorizontalContentAlignment="Center"/>
             <ComboBoxItem Content="720p" BorderThickness="0" Background="#FFB6B6B6" HorizontalContentAlignment="Center"/>
             <ComboBoxItem Content="1080p" BorderThickness="0" Background="#FFB6B6B6" HorizontalContentAlignment="Center"/>
         </ComboBox>
-        <Button x:Name="SaveGroupsBtn" Content="Save Groups" Width="81" BorderThickness="0" Margin="0,155,10,0" Background="#FF343434"
-            	Foreground="#FFB6B6B6" Padding="0" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Click="SaveGroupsBtn_Click" />
+        <Button x:Name="SaveAllBtn" Content="Save" Width="505" BorderThickness="0" Margin="0,266,10,0" Background="#FF343434"
+        	Foreground="#FFB6B6B6" Padding="0" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Click="SaveAllBtn_Click" />
+
         <ListBox x:Name="listBox" Margin="1,56,1,25" MouseDoubleClick="listBox_MouseDoubleClick" BorderThickness="0" Visibility="Collapsed" >
             <!--<ListBoxItem Content="Downloaded" IsEnabled="False" Tag="blank" />
             <Separator IsEnabled="False" Tag="blank" />-->

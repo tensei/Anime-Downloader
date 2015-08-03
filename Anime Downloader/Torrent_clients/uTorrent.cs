@@ -7,13 +7,13 @@ namespace Anime_Downloader
 {
     internal class uTorrent
     {
-        public void open(Dictionary<string, string> list, string title, string filename)
+        public void open(Dictionary<string, string> list, string title, string filename, string torrentfiles, string ongoing, string torrentclient)
         {
             var sta = new Process();
-            var torrenFile = Path.Combine(Settings.Default.PathDownloads, title + ".torrent");
-            var downloadsafe = Settings.Default.PathOngoing + @"\" + list[filename];
+            var torrenFile = Path.Combine(torrentfiles, title + ".torrent");
+            var downloadsafe = ongoing + @"\" + list[filename];
             var call = string.Format("/DIRECTORY \"{0}\" \"{1}\"", downloadsafe, torrenFile);
-            sta.StartInfo.FileName = Settings.Default.PathuTorrent;
+            sta.StartInfo.FileName = torrentclient;
             sta.StartInfo.Arguments = call;
             sta.Start();
             sta.Dispose();

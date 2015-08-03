@@ -2,13 +2,13 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Anime_Downloader.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="PathuTorrent" Type="System.String" Scope="User">
+    <Setting Name="TorrentClient" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\dummy\*exe</Value>
     </Setting>
-    <Setting Name="PathDownloads" Type="System.String" Scope="User">
+    <Setting Name="Torrent_Files" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\dummy</Value>
     </Setting>
-    <Setting Name="PathOngoing" Type="System.String" Scope="User">
+    <Setting Name="OngoingFolder" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\dummy</Value>
     </Setting>
     <Setting Name="RefreshCounter" Type="System.Int32" Scope="User">

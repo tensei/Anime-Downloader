@@ -7,9 +7,9 @@
     "[JnM",
     "[Com"
   ],
-  "Torrent_Client": "",
-  "Ongoing_Folder": "",
-  "Torrent_Files": "",
+  "Torrent_Client": "D:\\Program Files (x86)\\Deluge\\deluge-console.exe",
+  "Ongoing_Folder": "D:\\Anime\\Ongoing",
+  "Torrent_Files": "D:\\Development\\visual studio 2015",
   "Resolution": "720p",
   "Exceptions": [],
   "Refresh_Time": "60"
