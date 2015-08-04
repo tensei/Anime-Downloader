@@ -47,7 +47,11 @@ namespace Anime_Downloader
         private readonly SolidColorBrush ReadColorFg = new SolidColorBrush(Color.FromArgb(255, 140, 140, 140));
         public readonly NotifyIcon notifyIcon = new NotifyIcon();
         private readonly System.Windows.Forms.ContextMenu contextMenu1 = new System.Windows.Forms.ContextMenu();
-        private readonly System.Windows.Forms.MenuItem menuItem1 = new System.Windows.Forms.MenuItem();
+
+        private readonly System.Windows.Forms.MenuItem ExitMenuItem = new System.Windows.Forms.MenuItem();
+        private readonly System.Windows.Forms.MenuItem ShowmenuItem = new System.Windows.Forms.MenuItem();
+        private readonly System.Windows.Forms.MenuItem ForcemenuItem = new System.Windows.Forms.MenuItem();
+
         private readonly string Filepath = "AnimeDownloader.json";
         private JObject jsonFile = JObject.Parse(File.ReadAllText("AnimeDownloader.json"));
         private int timer = 5;
@@ -57,7 +61,6 @@ namespace Anime_Downloader
         public MainWindow()
         {
             InitializeComponent();
-            Settings.Default.RefreshTimer = 5;
 
             ThreadStart childref = CheckNow;
             var childThread = new Thread(childref);
@@ -65,15 +68,13 @@ namespace Anime_Downloader
             childThread.Start();
 
             FillProcessList();
-            menuItem1.Index = 0;
-            menuItem1.Text = "Exit";
-            menuItem1.Click += menuItem1_Click;
             notifyIcon.ContextMenu = contextMenu1;
-            notifyIcon.ContextMenu.MenuItems.Add(menuItem1);
+            notifyIcon.ContextMenu.MenuItems.Add(ExitMenuItem);
             notifyIcon.Icon = Properties.Resources.testicon;
+            notifyIcon.DoubleClick += ShowMenuItem_Click;
             notifyIcon.Visible = true;
             showBalloon("Anime Downloader", "Starting...");
-
+            AddMenuItems();
             foreach (var item in Settings.Default.Listbox)
             {
                 DebugTextbox.Text += item;
@@ -96,12 +97,44 @@ namespace Anime_Downloader
             TorrentClient = jsonFile["Torrent_Client"].ToString();
             Res = jsonFile["Resolution"].ToString();
         }
-        private void menuItem1_Click(object Sender, EventArgs e)
+
+        private void AddMenuItems()
+        {
+            ExitMenuItem.Index = 0;
+            ExitMenuItem.Text = "Exit";
+            ExitMenuItem.Click += ExitMenuItemClick;
+
+            ShowmenuItem.Index = 1;
+            ShowmenuItem.Text = "Show";
+            ShowmenuItem.Click += ShowMenuItem_Click;
+
+            ForcemenuItem.Index = 2;
+            ForcemenuItem.Text = "Force";
+            ForcemenuItem.Click += ForceMenuItem_Click;
+
+            notifyIcon.ContextMenu.MenuItems.Add(ForcemenuItem);
+            notifyIcon.ContextMenu.MenuItems.Add(ShowmenuItem);
+            notifyIcon.ContextMenu.MenuItems.Add(ExitMenuItem);
+
+        }
+        private void ExitMenuItemClick(object Sender, EventArgs e)
         {
             // Close the form, which closes the application. 
             notifyIcon.Dispose();
             Close();
         }
+        private void ShowMenuItem_Click(object Sender, EventArgs e)
+        {
+            // Close the form, which closes the application. 
+            WindowState = WindowState.Normal;
+        }
+
+        private void ForceMenuItem_Click(object Sender, EventArgs e)
+        {
+            // Close the form, which closes the application. 
+            timer = 1;
+        }
+
         private void FillProcessList()
         {
             processes.Clear();
@@ -160,7 +193,7 @@ namespace Anime_Downloader
                 else
                 {
                     var client = new WebClient();
-                    Settings.Default.StatusLabel = "Status: Checking in " + Settings.Default.RefreshTimer + " seconds.";
+                    Settings.Default.StatusLabel = "Status: Checking in " + timer + " seconds.";
                     Torrents = new List<string>(Directory.EnumerateFiles(TorrentFiles));
                     GetOnGoing();
                     List<string> rssitems;
@@ -226,98 +259,6 @@ namespace Anime_Downloader
                                     case "nope":
                                         break;
                                 }
-
-                                //filename.Replace("Anime Koi", "Anime-Koi");
-                                //if (title.Contains(filename) && title.Contains("720") && !last.Contains(title) &&
-                                //    !title.ToLower().Contains("batch"))
-                                //{
-                                //    if (!Torrents.Contains(TorrentFiles + @"\" + title + @".torrent") &&
-                                //        !done.Contains(title))
-                                //    {
-                                //        Dispatcher.BeginInvoke(
-                                //            new Action(
-                                //                delegate
-                                //                {
-                                //                    createListboxItem(title, ongoing[filename] + @"\" + title, true);
-                                //                    showBalloon("New Anime", "Downloading\n"+ title);
-                                //                    Settings.Default.Listbox.Add(title + "[]" + ongoing[filename] + @"\" +
-                                //                        title + "[]" + "true" + "\n");
-                                //                    Settings.Default.Save();
-                                //                }));
-                                //        //download file and add it to torrent downloader
-                                //        client.DownloadFile(new Uri(link), TorrentFiles + @"\" + title + @".torrent");
-                                //        if (TorrentClient.ToLower().Contains("utorrent") &&
-                                //            processes.Contains("uTorrent"))
-                                //        {
-                                //            if (processes.Contains("uTorrent"))
-                                //            {
-                                //                uTorrent.open(ongoing, title, filename, TorrentFiles, OngoingFolder, TorrentClient);
-                                //            }
-                                //            else
-                                //            {
-                                //                Process.Start(TorrentClient);
-                                //                Thread.Sleep(1500);
-                                //                uTorrent.open(ongoing, title, filename, TorrentFiles, OngoingFolder, TorrentClient);
-                                //            }
-                                //        }
-                                //        else if (TorrentClient.ToLower().Contains("deluge-console.exe"))
-                                //        {
-                                //            if (processes.Contains("deluged"))
-                                //            {
-                                //                deluge.open(ongoing, title, filename, TorrentFiles, OngoingFolder, TorrentClient);
-                                //            }
-                                //            else
-                                //            {
-                                //                Process.Start(TorrentClient.Replace("-console", "d"));
-                                //                Thread.Sleep(1500);
-                                //                deluge.open(ongoing, title, filename, TorrentFiles, OngoingFolder, TorrentClient);
-                                //            }
-                                //        }
-                                //        done.Add(title);
-                                //        Thread.Sleep(200);
-                                //    }
-                                //}
-                                //else if (title.Contains(filename) && groups.Contains(title.Substring(0, 4)) &&
-                                //         !last.Contains(title) &&
-                                //         !title.ToLower().Contains("batch"))
-                                //{
-                                //    if (!Torrents.Contains(title + ".torrent") && !done.Contains(title))
-                                //    {
-                                //        Dispatcher.BeginInvoke(
-                                //            new Action(
-                                //                delegate
-                                //                {
-                                //                    createListboxItem(title, ongoing[filename] + @"\" + title, true);
-                                //                    showBalloon("New Anime", "Downloading\n" + title);
-                                //                    Settings.Default.Listbox.Add(title + "[]" + ongoing[filename] + @"\" +
-                                //                        title + "[]" + "true" + "\n");
-                                //                    Settings.Default.Save();
-                                //                }));
-                                //        //download file and add it to torrent downloader
-                                //        client.DownloadFile(new Uri(link),
-                                //            TorrentFiles + @"\" + title + @".torrent");
-                                //        if (TorrentClient.ToLower().Contains("utorrent") &&
-                                //            processes.Contains("uTorrent"))
-                                //        {
-                                //            uTorrent.open(ongoing, title, filename, TorrentFiles, OngoingFolder, TorrentClient);
-                                //        }
-                                //        else if (TorrentClient.ToLower().Contains("deluge-console.exe"))
-                                //        {
-                                //            if (processes.Contains("deluged"))
-                                //            {
-                                //                deluge.open(ongoing, title, filename, TorrentFiles, OngoingFolder, TorrentClient);
-                                //            }
-                                //            else
-                                //            {
-                                //                Process.Start(TorrentClient.Replace("-console", "d"));
-                                //                Thread.Sleep(1500);
-                                //                deluge.open(ongoing, title, filename, TorrentFiles, OngoingFolder, TorrentClient);
-                                //            }
-                                //        }
-                                //        done.Add(title);
-                                //        Thread.Sleep(200);
-                                //    }
-                                //}
                             }
                         }
                         timer++;
