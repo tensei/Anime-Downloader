@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:Anime_Downloader"
         xmlns:p="clr-namespace:Anime_Downloader.Properties"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525" WindowStyle="None"
-        WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+        Title="Anime Downloader" Height="350" Width="525" WindowStyle="None"
+        WindowStartupLocation="Manual" ResizeMode="CanMinimize">
     <Grid Background="#FF4D4D4D" MouseDown="Grid_MouseDown">
 
         <Label x:Name="label" Content="Anime Downloader" Margin="10,-1,0,0" VerticalAlignment="Top" Foreground="#FFB6B6B6"
@@ -58,7 +58,7 @@
         <Button x:Name="SaveAllBtn" Content="Save" Width="505" BorderThickness="0" Margin="0,266,10,0" Background="#FF343434"
         	Foreground="#FFB6B6B6" Padding="0" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Click="SaveAllBtn_Click" />
 
-        <ListBox x:Name="listBox" Margin="1,56,1,25" MouseDoubleClick="listBox_MouseDoubleClick" BorderThickness="0" Visibility="Collapsed" >
+        <ListBox x:Name="listBox" Margin="1,56,1,25" MouseDoubleClick="listBox_MouseDoubleClick" BorderThickness="0" >
             <!--<ListBoxItem Content="Downloaded" IsEnabled="False" Tag="blank" />
             <Separator IsEnabled="False" Tag="blank" />-->
         </ListBox>

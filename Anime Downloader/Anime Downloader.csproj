@@ -86,6 +86,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Handlers\ConfigFileHandler.cs" />
     <Compile Include="Handlers\CheckTitleHandler.cs" />
     <Compile Include="Handlers\DoubleClickHandler.cs" />
     <Compile Include="Torrent_clients\Deluge.cs" />

@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows;
@@ -52,8 +53,9 @@ namespace Anime_Downloader
         private readonly System.Windows.Forms.MenuItem ShowmenuItem = new System.Windows.Forms.MenuItem();
         private readonly System.Windows.Forms.MenuItem ForcemenuItem = new System.Windows.Forms.MenuItem();
 
+        private ConfigFileHandler c = new ConfigFileHandler(); 
         private readonly string Filepath = "AnimeDownloader.json";
-        private JObject jsonFile = JObject.Parse(File.ReadAllText("AnimeDownloader.json"));
+        private JObject jsonFile;
         private int timer = 5;
 
         //private JObject jsonFile;
@@ -61,6 +63,8 @@ namespace Anime_Downloader
         public MainWindow()
         {
             InitializeComponent();
+            c.CheckFile();
+            jsonFile = JObject.Parse(File.ReadAllText(Filepath));
 
             ThreadStart childref = CheckNow;
             var childThread = new Thread(childref);
