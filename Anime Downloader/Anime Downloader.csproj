@@ -58,9 +58,12 @@
     <ApplicationIcon>testicon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup />
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -89,6 +92,9 @@
     <Compile Include="Handlers\ConfigFileHandler.cs" />
     <Compile Include="Handlers\CheckTitleHandler.cs" />
     <Compile Include="Handlers\DoubleClickHandler.cs" />
+    <Compile Include="Handlers\GetItemInfos.cs" />
+    <Compile Include="Handlers\Getitems.cs" />
+    <Compile Include="Handlers\SaveOnExit.cs" />
     <Compile Include="Torrent_clients\Deluge.cs" />
     <Compile Include="RSS_feeds\nyaase.cs" />
     <Compile Include="Torrent_clients\uTorrent.cs" />

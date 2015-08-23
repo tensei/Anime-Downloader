@@ -58,7 +58,17 @@
         <Button x:Name="SaveAllBtn" Content="Save" Width="505" BorderThickness="0" Margin="0,266,10,0" Background="#FF343434"
         	Foreground="#FFB6B6B6" Padding="0" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Click="SaveAllBtn_Click" />
 
-        <ListBox x:Name="listBox" Margin="1,56,1,25" MouseDoubleClick="listBox_MouseDoubleClick" BorderThickness="0" >
+            <!--<ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True" >
+                            <Setter Property="FontWeight" Value="Bold" />
+                            <Setter Property="Foreground" Value="Black" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListBox.ItemContainerStyle>-->
+
             <!--<ListBoxItem Content="Downloaded" IsEnabled="False" Tag="blank" />
             <Separator IsEnabled="False" Tag="blank" />-->
         </ListBox>

@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -20,6 +21,7 @@ using Anime_Downloader.Properties;
 using Newtonsoft.Json.Linq;
 using Color = System.Windows.Media.Color;
 using MessageBox = System.Windows.MessageBox;
+using SystemColors = System.Windows.SystemColors;
 
 namespace Anime_Downloader
 {
@@ -53,11 +55,11 @@ namespace Anime_Downloader
         private readonly System.Windows.Forms.MenuItem ShowmenuItem = new System.Windows.Forms.MenuItem();
         private readonly System.Windows.Forms.MenuItem ForcemenuItem = new System.Windows.Forms.MenuItem();
 
-        private ConfigFileHandler c = new ConfigFileHandler(); 
+        private readonly ConfigFileHandler c = new ConfigFileHandler(); 
         private readonly string Filepath = "AnimeDownloader.json";
         private JObject jsonFile;
-        private int timer = 5;
-
+        private int _timer = 5;
+        
         //private JObject jsonFile;
 
         public MainWindow()
@@ -67,8 +69,7 @@ namespace Anime_Downloader
             jsonFile = JObject.Parse(File.ReadAllText(Filepath));
 
             ThreadStart childref = CheckNow;
-            var childThread = new Thread(childref);
-            childThread.IsBackground = true;
+            var childThread = new Thread(childref) {IsBackground = true};
             childThread.Start();
 
             FillProcessList();
@@ -100,6 +101,21 @@ namespace Anime_Downloader
             TorrentFiles = jsonFile["Torrent_Files"].ToString();
             TorrentClient = jsonFile["Torrent_Client"].ToString();
             Res = jsonFile["Resolution"].ToString();
+            Settings.Default.StatusLabel = "Status: Setting things up...";
+            PopulateListbox();
+        }
+
+        private void PopulateListbox()
+        {
+            Getitems getitems = new Getitems();
+            foreach (var item in getitems.get())
+            {
+                var iteminfo = item.Split(new[] { "[]" }, StringSplitOptions.None);
+                ListBoxItem listBoxItem = new ListBoxItem();
+                listBoxItem.Content = iteminfo[0];
+                listBoxItem.Tag = iteminfo[1];
+                listBox.Items.Insert(0, listBoxItem);
+            }
         }
 
         private void AddMenuItems()
@@ -136,7 +152,7 @@ namespace Anime_Downloader
         private void ForceMenuItem_Click(object Sender, EventArgs e)
         {
             // Close the form, which closes the application. 
-            timer = 1;
+            _timer = 1;
         }
 
         private void FillProcessList()
@@ -178,15 +194,15 @@ namespace Anime_Downloader
         {
             while (true)
             {
-                if (timer >= 1)
+                if (_timer >= 1)
                 {
                     if (File.Exists(TorrentClient) &&
                         Directory.Exists(OngoingFolder) &&
                         Directory.Exists(TorrentFiles))
                     {
-                        Settings.Default.StatusLabel = "Status: Checking in " + timer +
+                        Settings.Default.StatusLabel = "Status: Checking in " + _timer +
                                                        " seconds.";
-                        timer--;
+                        _timer--;
                     }
                     else
                     {
@@ -197,7 +213,7 @@ namespace Anime_Downloader
                 else
                 {
                     var client = new WebClient();
-                    Settings.Default.StatusLabel = "Status: Checking in " + timer + " seconds.";
+                    Settings.Default.StatusLabel = "Status: Checking in " + _timer + " seconds.";
                     Torrents = new List<string>(Directory.EnumerateFiles(TorrentFiles));
                     GetOnGoing();
                     List<string> rssitems;
@@ -205,7 +221,7 @@ namespace Anime_Downloader
                     {
                         rssitems = neko.Get_feed_titles();
                     }
-                    catch (WebException e)
+                    catch (Exception)
                     {
                         rssitems = new List<string>();
                         //MessageBox.Show(e.Message);
@@ -232,7 +248,7 @@ namespace Anime_Downloader
                                                 new Action(
                                                     delegate
                                                     {
-                                                        createListboxItem(title, ongoing[filename] + @"\" + title, true);
+                                                        CreateListboxItem(title, ongoing[filename] + @"\" + title, true);
                                                         showBalloon("New Anime", "Downloading\n" + title);
                                                         Settings.Default.Listbox.Add(title + "[]" + ongoing[filename] + @"\" +
                                                             title + "[]" + "true" + "\n");
@@ -250,7 +266,7 @@ namespace Anime_Downloader
                                                 new Action(
                                                     delegate
                                                     {
-                                                        createListboxItem(title, ongoing[filename] + @"\" + title, true);
+                                                        CreateListboxItem(title, ongoing[filename] + @"\" + title, true);
                                                         showBalloon("New Anime", "Downloading\n" + title);
                                                         Settings.Default.Listbox.Add(title + "[]" + ongoing[filename] + @"\" +
                                                             title + "[]" + "true" + "\n");
@@ -265,10 +281,10 @@ namespace Anime_Downloader
                                 }
                             }
                         }
-                        timer++;
+                        _timer++;
                         client.Dispose();
                     }
-                    timer = int.Parse(jsonFile["Refresh_Time"].ToString());
+                    _timer = int.Parse(jsonFile["Refresh_Time"].ToString());
                 }
             }
         }
@@ -289,6 +305,15 @@ namespace Anime_Downloader
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
+            GetItemInfos getItemInfos = new GetItemInfos();
+            SaveOnExit saveOnExit = new SaveOnExit();
+            var listboxitem = new List<object>();
+            foreach (var item in listBox.Items)
+            {
+                listboxitem.Add(item);
+            }
+            var items = getItemInfos.ConverttostringList(listboxitem);
+            saveOnExit.Saveitems(items);
             notifyIcon.Dispose();
             Close();
         }
@@ -298,7 +323,7 @@ namespace Anime_Downloader
             WindowState = WindowState.Minimized;
         }
 
-        public void createListboxItem(string content, string tag, bool isenabled)
+        public void CreateListboxItem(string content, string tag, bool isenabled)
         {
             var itmheader = new ListBoxItem();
             itmheader.Tag = OngoingFolder + @"\" + tag;
@@ -343,6 +368,7 @@ namespace Anime_Downloader
 
         private void SettingBtn_Click(object sender, RoutedEventArgs e)
         {
+            var maxWidth = 523;
             if (listBox.Visibility == Visibility.Collapsed)
             {
                 listBox.Visibility = Visibility.Visible;
@@ -354,7 +380,8 @@ namespace Anime_Downloader
                 listBox1.Visibility = Visibility.Collapsed;
             }
         }
-        
+
+
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
@@ -378,14 +405,7 @@ namespace Anime_Downloader
 
         private void SaveAllBtn_Click(object sender, RoutedEventArgs e)
         {
-            var groups = new List<string>();
-            foreach (var s in GroupsTextBox.Text.Split(new[] { ", " }, StringSplitOptions.None))
-            {
-                if (s.Length == 4)
-                {
-                    groups.Add(s);
-                }
-            }
+            var groups = GroupsTextBox.Text.Split(new[] {", "}, StringSplitOptions.None).Where(s => s.Length == 4).ToList();
             GroupsTextBox.Text = string.Join(", ", groups);
             jsonFile["Groups"] = JToken.FromObject(groups);
             jsonFile["Resolution"] =((ComboBoxItem)comboBox.SelectedItem).Content.ToString();
@@ -402,6 +422,11 @@ namespace Anime_Downloader
             TorrentFiles = TorrentFilesTextBox.Text;
             OngoingFolder = OnGoingFolderTextBox.Text;
             
+
+        }
+
+        private void listBox_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
 
         }
     }

@@ -40,10 +40,10 @@ namespace Anime_Downloader.Properties {
         [global::System.Configuration.DefaultSettingValueAttribute("C:\\dummy")]
         public string Torrent_Files {
             get {
-                return ((string)(this["TorrentFiles"]));
+                return ((string)(this["Torrent_Files"]));
             }
             set {
-                this["TorrentFiles"] = value;
+                this["Torrent_Files"] = value;
             }
         }
         
