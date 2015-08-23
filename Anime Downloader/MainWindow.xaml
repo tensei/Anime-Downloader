@@ -59,6 +59,11 @@
         	Foreground="#FFB6B6B6" Padding="0" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Click="SaveAllBtn_Click" />
 
         <ListBox x:Name="listBox" Margin="1,56,0,25" MouseDoubleClick="listBox_MouseDoubleClick" BorderThickness="0" HorizontalAlignment="Left" Width="523" MouseRightButtonUp="listBox_MouseRightButtonUp" >
+            <ListBox.ContextMenu>
+                <ContextMenu Margin="-40,0,0,0">
+                    <MenuItem Header="Watched" Margin="0,0,-40,0"></MenuItem>
+                </ContextMenu>
+            </ListBox.ContextMenu>
             <!--<ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Style.Triggers>

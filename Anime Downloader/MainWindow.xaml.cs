@@ -20,6 +20,7 @@ using Anime_Downloader.Handlers;
 using Anime_Downloader.Properties;
 using Newtonsoft.Json.Linq;
 using Color = System.Windows.Media.Color;
+using MenuItem = System.Windows.Controls.MenuItem;
 using MessageBox = System.Windows.MessageBox;
 using SystemColors = System.Windows.SystemColors;
 
@@ -310,7 +311,11 @@ namespace Anime_Downloader
             var listboxitem = new List<object>();
             foreach (var item in listBox.Items)
             {
-                listboxitem.Add(item);
+                var it = ((ListBoxItem) item);
+                if (!it.Foreground.Equals(ReadColorFg))
+                {
+                    listboxitem.Add(item);
+                }
             }
             var items = getItemInfos.ConverttostringList(listboxitem);
             saveOnExit.Saveitems(items);
@@ -395,6 +400,7 @@ namespace Anime_Downloader
             {
                 var itemselected = ((ListBoxItem) listBox.SelectedItem);
                 doubleClick.Open(itemselected);
+                itemselected.Foreground = ReadColorFg;
             }
             catch (Exception a)
             {
@@ -425,9 +431,33 @@ namespace Anime_Downloader
 
         }
 
+        private void MenuItem_click(object sender, RoutedEventArgs e)
+        {
+            var item = ((ListBoxItem) listBox.SelectedItem);
+            item.Foreground = ReadColorFg;
+        }
+
         private void listBox_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
+            if (listBox.SelectedIndex.Equals(-1))
+            {
+                return;
+            }
+            listBox.ContextMenu.Items.Clear();
 
+            var item = ((ListBoxItem) listBox.SelectedItem);
+            MenuItem name = new MenuItem();
+            name.Header = item.Content;
+            name.Margin = new Thickness(+15, 0, -40, 0);
+            name.IsEnabled = false;
+            listBox.ContextMenu.Items.Add(name);
+            
+            MenuItem watchediItem = new MenuItem();
+            watchediItem.Header = "Watched";
+            watchediItem.Margin = new Thickness(+15, 0, -40, 0);
+            watchediItem.Click += MenuItem_click;
+            listBox.ContextMenu.Items.Add(watchediItem);
         }
+        
     }
 }
