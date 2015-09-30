@@ -1,4 +1,5 @@
 {
+  "RSS": "http://www.nyaa.se/?cats=1_37&filter=2",
   "Groups": [
     "[FFF",
     "[Ani",
@@ -11,6 +12,6 @@
   "Ongoing_Folder": "D:\\Anime\\Ongoing",
   "Torrent_Files": "D:\\Development\\visual studio 2015",
   "Resolution": "720p",
-  "Exceptions": [],
+  "Exceptions": [ ],
   "Refresh_Time": "60"
 }

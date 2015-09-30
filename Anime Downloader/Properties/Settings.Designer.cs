@@ -145,5 +145,17 @@ namespace Anime_Downloader.Properties {
                 this["Setting"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string RSS {
+            get {
+                return ((string)(this["RSS"]));
+            }
+            set {
+                this["RSS"] = value;
+            }
+        }
     }
 }

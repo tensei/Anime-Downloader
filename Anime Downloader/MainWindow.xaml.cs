@@ -81,10 +81,10 @@ namespace Anime_Downloader
             notifyIcon.Visible = true;
             showBalloon("Anime Downloader", "Starting...");
             AddMenuItems();
-            foreach (var item in Settings.Default.Listbox)
-            {
-                DebugTextbox.Text += item;
-            }
+            //foreach (var item in Settings.Default.Listbox)
+            //{
+            //    DebugTextbox.Text += item;
+            //}
             foreach (var child in jsonFile["Groups"].Children())
             {
                 GroupsTextBox.Text += child + ", ";
@@ -97,6 +97,8 @@ namespace Anime_Downloader
             TorrentFilesTextBox.Text = jsonFile["Torrent_Files"].ToString();
             OnGoingFolderTextBox.Text = jsonFile["Ongoing_Folder"].ToString();
             RefreshTimebox.Text = jsonFile["Refresh_Time"].ToString();
+            RSSFeedbox.Text = jsonFile["RSS"].ToString();
+            Settings.Default.RSS = jsonFile["RSS"].ToString();
 
             OngoingFolder = jsonFile["Ongoing_Folder"].ToString();
             TorrentFiles = jsonFile["Torrent_Files"].ToString();
@@ -141,6 +143,19 @@ namespace Anime_Downloader
         private void ExitMenuItemClick(object Sender, EventArgs e)
         {
             // Close the form, which closes the application. 
+            GetItemInfos getItemInfos = new GetItemInfos();
+            SaveOnExit saveOnExit = new SaveOnExit();
+            var listboxitem = new List<object>();
+            foreach (var item in listBox.Items)
+            {
+                var it = ((ListBoxItem)item);
+                if (!it.Foreground.Equals(ReadColorFg))
+                {
+                    listboxitem.Add(item);
+                }
+            }
+            var items = getItemInfos.ConverttostringList(listboxitem);
+            saveOnExit.Saveitems(items);
             notifyIcon.Dispose();
             Close();
         }
@@ -220,7 +235,7 @@ namespace Anime_Downloader
                     List<string> rssitems;
                     try
                     {
-                        rssitems = neko.Get_feed_titles();
+                        rssitems = neko.Get_feed_titles(Settings.Default.RSS);
                     }
                     catch (Exception)
                     {
@@ -412,6 +427,7 @@ namespace Anime_Downloader
         private void SaveAllBtn_Click(object sender, RoutedEventArgs e)
         {
             var groups = GroupsTextBox.Text.Split(new[] {", "}, StringSplitOptions.None).Where(s => s.Length == 4).ToList();
+            
             GroupsTextBox.Text = string.Join(", ", groups);
             jsonFile["Groups"] = JToken.FromObject(groups);
             jsonFile["Resolution"] =((ComboBoxItem)comboBox.SelectedItem).Content.ToString();
@@ -420,9 +436,10 @@ namespace Anime_Downloader
             jsonFile["Torrent_Files"] = TorrentFilesTextBox.Text;
             jsonFile["Ongoing_Folder"] = OnGoingFolderTextBox.Text;
             jsonFile["Refresh_Time"] = RefreshTimebox.Text;
-
+            jsonFile["RSS"] = RSSFeedbox.Text;
             File.WriteAllText(Filepath, jsonFile.ToString());
 
+            Settings.Default.RSS = RSSFeedbox.Text;
             Res = jsonFile["Resolution"].ToString();
             TorrentClient = TorrentClientTextBox.Text;
             TorrentFiles = TorrentFilesTextBox.Text;

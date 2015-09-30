@@ -9,11 +9,10 @@ namespace Anime_Downloader
 {
     internal class nyaase
     {
-        public List<string> Get_feed_titles()
+        public List<string> Get_feed_titles(string url)
         {
             var titleurl = new List<string>();
             string xml;
-            var url = "http://www.nyaa.se/?page=rss&cats=1_37";
             using (var webClient = new WebClient())
             {
                 xml = Encoding.UTF8.GetString(webClient.DownloadData(url));

@@ -43,7 +43,7 @@
         <Label x:Name="label5" Content="seconds." HorizontalAlignment="Left" Margin="201,156,0,0" VerticalAlignment="Top"
 		       Foreground="#FFB6B6B6" Height="25" />
         <TextBox x:Name="DebugTextbox" Height="23" Margin="10,0,10,31" TextWrapping="Wrap"
-        	VerticalAlignment="Bottom" Background="#FFB6B6B6" Padding="0,2,0,0" AcceptsReturn="True" AcceptsTab="True" />
+        	VerticalAlignment="Bottom" Background="#FFB6B6B6" Padding="0,2,0,0" AcceptsReturn="True" AcceptsTab="True" Visibility="Collapsed" />
         <Label x:Name="label6_Copy" Content="Groups" HorizontalAlignment="Left" Margin="10,186,0,0" VerticalAlignment="Top"
         	Foreground="#FFB6B6B6" Height="25" />
         <TextBox x:Name="GroupsTextBox" Height="23" Margin="140,188,10,0" TextWrapping="Wrap"
@@ -55,13 +55,21 @@
             <ComboBoxItem Content="720p" BorderThickness="0" Background="#FFB6B6B6" HorizontalContentAlignment="Center"/>
             <ComboBoxItem Content="1080p" BorderThickness="0" Background="#FFB6B6B6" HorizontalContentAlignment="Center"/>
         </ComboBox>
-        <Button x:Name="SaveAllBtn" Content="Save" Width="505" BorderThickness="0" Margin="0,266,10,0" Background="#FF343434"
+        <Button x:Name="SaveAllBtn" Content="Save" Width="505" BorderThickness="0" Margin="0,299,10,0" Background="#FF343434"
         	Foreground="#FFB6B6B6" Padding="0" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Click="SaveAllBtn_Click" />
+
+        <ComboBox x:Name="RSSFeedbox" Height="23" Margin="140,268,10,0"
+        	VerticalAlignment="Top" Background="#FFB6B6B6" Padding="0,2,0,0" IsReadOnly="True" >
+            <ComboBoxItem Content="http://www.nyaa.se/?page=rss&amp;cats=1_37&amp;filter=2" ToolTip="Trusted only" Background="{x:Null}"/>
+            <ComboBoxItem Content="http://www.nyaa.se/?page=rss&amp;cats=1_37" ToolTip="All"/>
+        </ComboBox>
+        <Label x:Name="label6_Copy2" Content="RSS Feed" HorizontalAlignment="Left" Margin="10,266,0,0" VerticalAlignment="Top"
+        	Foreground="#FFB6B6B6" Height="25" />
 
         <ListBox x:Name="listBox" Margin="1,56,0,25" MouseDoubleClick="listBox_MouseDoubleClick" BorderThickness="0" HorizontalAlignment="Left" Width="523" MouseRightButtonUp="listBox_MouseRightButtonUp" >
             <ListBox.ContextMenu>
                 <ContextMenu Margin="-40,0,0,0">
-                    
+
                 </ContextMenu>
             </ListBox.ContextMenu>
             <!--<ListBox.ItemContainerStyle>
