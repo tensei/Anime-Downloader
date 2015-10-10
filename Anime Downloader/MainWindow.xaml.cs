@@ -32,6 +32,7 @@ namespace Anime_Downloader
     [Serializable]
     public partial class MainWindow : Window
     {
+        private string Rssfeed = "http://www.nyaa.se/?page=rss&cats=1_37";
         public List<string> done = new List<string>();
         public List<string> groups = new List<string>();
         public List<string> last = new List<string>();
@@ -48,6 +49,7 @@ namespace Anime_Downloader
         private readonly List<string> processes = new List<string>();
         private readonly uTorrent uTorrent = new uTorrent();
         public List<object> LstItems = new List<object>();
+        private readonly SolidColorBrush borderBrush = new SolidColorBrush(Color.FromArgb(255, 0, 0, 0));
         private readonly SolidColorBrush ReadColorFg = new SolidColorBrush(Color.FromArgb(255, 140, 140, 140));
         public readonly NotifyIcon notifyIcon = new NotifyIcon();
         private readonly System.Windows.Forms.ContextMenu contextMenu1 = new System.Windows.Forms.ContextMenu();
@@ -162,7 +164,11 @@ namespace Anime_Downloader
         private void ShowMenuItem_Click(object Sender, EventArgs e)
         {
             // Close the form, which closes the application. 
+
             WindowState = WindowState.Normal;
+            Topmost = true;
+            Topmost = false;
+
         }
 
         private void ForceMenuItem_Click(object Sender, EventArgs e)
@@ -276,13 +282,13 @@ namespace Anime_Downloader
                                     }
                                     case "deluge":
                                     {
-                                            client.DownloadFile(new Uri(link), TorrentFiles + @"\" + title + @".torrent");
+                                            client.DownloadFile(new Uri(link), TorrentFiles + @"\" + title.Replace("'", string.Empty) + @".torrent");
                                             deluge.open(ongoing, title, filename, TorrentFiles, OngoingFolder, TorrentClient);
                                             Dispatcher.BeginInvoke(
                                                 new Action(
                                                     delegate
                                                     {
-                                                        CreateListboxItem(title, ongoing[filename] + @"\" + title, true);
+                                                        CreateListboxItem(title.Replace("'", string.Empty), ongoing[filename] + @"\" + title.Replace("'", string.Empty), true);
                                                         showBalloon("New Anime", "Downloading\n" + title);
                                                         Settings.Default.Listbox.Add(title + "[]" + ongoing[filename] + @"\" +
                                                             title + "[]" + "true" + "\n");
@@ -388,7 +394,6 @@ namespace Anime_Downloader
 
         private void SettingBtn_Click(object sender, RoutedEventArgs e)
         {
-            var maxWidth = 523;
             if (listBox.Visibility == Visibility.Collapsed)
             {
                 listBox.Visibility = Visibility.Visible;
@@ -398,6 +403,9 @@ namespace Anime_Downloader
             {
                 listBox.Visibility = Visibility.Collapsed;
                 listBox1.Visibility = Visibility.Collapsed;
+                Rssfeedpanel.Visibility = Visibility.Collapsed;
+                FeeditemBox.Visibility = Visibility.Collapsed;
+                CloseStackPanel.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -475,6 +483,233 @@ namespace Anime_Downloader
             watchediItem.Click += MenuItem_click;
             listBox.ContextMenu.Items.Add(watchediItem);
         }
-        
+
+        public SolidColorBrush GetStatus(string summary)
+        {
+            SolidColorBrush Trusted = new SolidColorBrush(Color.FromArgb(255, 152, 217, 168));
+            SolidColorBrush Aplus = new SolidColorBrush(Color.FromArgb(255, 96, 176, 240));
+            SolidColorBrush Remake = new SolidColorBrush(Color.FromArgb(255, 240, 176, 128));
+            SolidColorBrush Normal = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
+            if (summary.ToLower().Contains("remake"))
+            {
+                return Remake;
+            }
+            else if (summary.ToLower().Contains("a+ - trusted"))
+            {
+                return Aplus;
+            }
+            else if (summary.ToLower().Contains("trusted"))
+            {
+                return Trusted;
+            }
+            else
+            {
+                return Normal;
+            }
+
+        }
+
+        public void FillRSSbox()
+        {
+            var selected = ((ComboBoxItem)FilterComboBox.SelectedItem);
+            switch (selected.Content.ToString())
+            {
+                case "Show all":
+                    {
+                        FeeditemBox.Items.Clear();
+                        var feed = neko.Get_feed_titles("http://www.nyaa.se/?page=rss&cats=1_37");
+                        Rssfeed = "http://www.nyaa.se/?page=rss&cats=1_37";
+                        foreach (var item in feed)
+                        {
+                            var isplit = item.Split(new[] { "[]" }, StringSplitOptions.None);
+                            ListBoxItem i = new ListBoxItem();
+                            i.Content = isplit[0];
+                            i.Tag = isplit[1];
+                            i.ToolTip = isplit[2];
+                            i.Background = GetStatus(isplit[2]);
+                            i.BorderBrush = borderBrush;
+                            i.BorderThickness = new Thickness(1, 1, 1, 0);
+                            FeeditemBox.Items.Add(i);
+                        }
+                        FeeditemBox.ScrollIntoView(FeeditemBox.Items[0]);
+                        break;
+                    }
+                case "Trusted only":
+                    {
+                        FeeditemBox.Items.Clear();
+                        var feed = neko.Get_feed_titles("http://www.nyaa.se/?page=rss&cats=1_37&filter=2");
+                        Rssfeed = "http://www.nyaa.se/?page=rss&cats=1_37&filter=2";
+                        foreach (var item in feed)
+                        {
+                            var isplit = item.Split(new[] { "[]" }, StringSplitOptions.None);
+                            ListBoxItem i = new ListBoxItem();
+                            i.Content = isplit[0];
+                            i.Tag = isplit[1];
+                            i.ToolTip = isplit[2];
+                            i.Background = GetStatus(isplit[2]);
+                            i.BorderBrush = borderBrush;
+                            i.BorderThickness = new Thickness(1, 1, 1, 0);
+                            FeeditemBox.Items.Add(i);
+                        }
+                        FeeditemBox.ScrollIntoView(FeeditemBox.Items[0]);
+                        break;
+                    }
+                case "Filter remakes":
+                    {
+                        FeeditemBox.Items.Clear();
+                        var feed = neko.Get_feed_titles("http://www.nyaa.se/?page=rss&cats=1_37&filter=1");
+                        Rssfeed = "http://www.nyaa.se/?page=rss&cats=1_37&filter=1";
+                        foreach (var item in feed)
+                        {
+                            var isplit = item.Split(new[] { "[]" }, StringSplitOptions.None);
+                            ListBoxItem i = new ListBoxItem();
+                            i.Content = isplit[0];
+                            i.Tag = isplit[1];
+                            i.ToolTip = isplit[2];
+                            i.Background = GetStatus(isplit[2]);
+                            i.BorderBrush = borderBrush;
+                            i.BorderThickness = new Thickness(1, 1, 1, 0);
+                            FeeditemBox.Items.Add(i);
+                        }
+                        FeeditemBox.ScrollIntoView(FeeditemBox.Items[0]);
+                        break;
+                    }
+                case "A+ only":
+                    {
+                        FeeditemBox.Items.Clear();
+                        var feed = neko.Get_feed_titles("http://www.nyaa.se/?page=rss&cats=1_37&filter=3");
+                        Rssfeed = "http://www.nyaa.se/?page=rss&cats=1_37&filter=3";
+                        foreach (var item in feed)
+                        {
+                            var isplit = item.Split(new[] { "[]" }, StringSplitOptions.None);
+                            ListBoxItem i = new ListBoxItem();
+                            i.Content = isplit[0];
+                            i.Tag = isplit[1];
+                            i.ToolTip = isplit[2];
+                            i.Background = GetStatus(isplit[2]);
+                            i.BorderBrush = borderBrush;
+                            i.BorderThickness = new Thickness(1, 1, 1, 0);
+                            FeeditemBox.Items.Add(i);
+                        }
+                        FeeditemBox.ScrollIntoView(FeeditemBox.Items[0]);
+                        break;
+                    }
+            }
+        }
+
+        private void textBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            FillRSSbox();
+        }
+
+        private void button_Click_1(object sender, RoutedEventArgs e)
+        {
+            FeeditemBox.Items.Clear();
+            var feed = neko.Get_feed_titles(Rssfeed + "&term=" + searchbox.Text.Trim().Replace(" ", "+"));
+            foreach (var item in feed)
+            {
+                var isplit = item.Split(new[] { "[]" }, StringSplitOptions.None);
+                ListBoxItem i = new ListBoxItem();
+                i.Content = isplit[0];
+                i.Tag = isplit[1];
+                i.ToolTip = isplit[2];
+                i.Background = GetStatus(isplit[2]);
+                i.BorderBrush = borderBrush;
+                i.BorderThickness = new Thickness(1,1,1,0);
+                FeeditemBox.Items.Add(i);
+            }
+        }
+
+        private void RSSBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (Rssfeedpanel.Visibility == Visibility.Collapsed)
+            {
+                Rssfeedpanel.Visibility = Visibility.Visible;
+                FeeditemBox.Visibility = Visibility.Visible;
+                CloseStackPanel.Visibility = Visibility.Visible;
+                if (FilterComboBox.SelectedIndex.Equals(-1))
+                {
+                    FilterComboBox.Text = "Show all";
+                    FillRSSbox();
+                }
+                return;
+            }
+            Rssfeedpanel.Visibility = Visibility.Collapsed;
+            FeeditemBox.Visibility = Visibility.Collapsed;
+            CloseStackPanel.Visibility = Visibility.Collapsed;
+
+        }
+
+        private void FeeditemBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var selectediten = ((ListBoxItem) FeeditemBox.SelectedItem);
+            Savepanel.Visibility = Visibility.Visible;
+            Filenamelabel.Text = selectediten.Content.ToString();
+            var suggestedname =
+                Regex.Match(selectediten.Content.ToString(), ".+](.+)-.+", RegexOptions.IgnoreCase).Groups[1].Value;
+            Folderbox.Text = Path.Combine(OngoingFolder, suggestedname.Trim());
+        }
+
+        private void ClosefeedpanelBtn_Copy_Click(object sender, RoutedEventArgs e)
+        {
+            Savepanel.Visibility = Visibility.Collapsed;
+            Folderbox.Text = String.Empty;
+            Filenamelabel.Text = "";
+        }
+
+        private void DownloadBtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var selectediten = ((ListBoxItem)FeeditemBox.SelectedItem);
+                if (!Directory.Exists(Folderbox.Text.Trim()))
+                {
+                    Directory.CreateDirectory(Folderbox.Text.Trim());
+                }
+                WebClient web = new WebClient();
+                web.DownloadFile(new Uri(selectediten.Tag.ToString()), TorrentFiles + @"\" + selectediten.Content.ToString().Replace("'", string.Empty) + @".torrent");
+                web.Dispose();
+                deluge.openFeeddownload(TorrentFiles, TorrentClient, Filenamelabel.Text.Trim(), Folderbox.Text.Trim());
+                
+                ListBoxItem i = new ListBoxItem();
+                i.Content = selectediten.Content;
+                i.Tag = Path.Combine(Folderbox.Text.Trim(), Filenamelabel.Text.Trim());
+                listBox.Items.Insert(0, i);
+                Savepanel.Visibility = Visibility.Collapsed;
+            }
+            catch (Exception se)
+            {
+                MessageBox.Show(se.Message);
+            }
+        }
+
+        private void Refreshbtn_Click(object sender, RoutedEventArgs e)
+        {
+            FillRSSbox();
+            FeeditemBox.ScrollIntoView(FeeditemBox.Items[0]);
+        }
+
+        private void button_Copy_Click(object sender, RoutedEventArgs e)
+        {
+            Rssfeedpanel.Visibility = Visibility.Collapsed;
+            FeeditemBox.Visibility = Visibility.Collapsed;
+            CloseStackPanel.Visibility = Visibility.Collapsed;
+        }
+
+        private void searchbox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (searchbox.Text == "Search...")
+            {
+                searchbox.Text = string.Empty;
+            }
+        }
+
+        private void searchbox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (searchbox.Text == "")
+            {
+                searchbox.Text = "Search...";
+            }
+        }
     }
 }

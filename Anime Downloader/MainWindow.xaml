@@ -7,7 +7,7 @@
         xmlns:p="clr-namespace:Anime_Downloader.Properties"
         mc:Ignorable="d"
         Title="Anime Downloader" Height="350" Width="525" WindowStyle="None"
-        WindowStartupLocation="Manual" ResizeMode="CanMinimize">
+        WindowStartupLocation="Manual"  ResizeMode="CanResizeWithGrip" AllowsTransparency="True" MinWidth="525" MinHeight="350">
     <Grid Background="#FF4D4D4D" MouseDown="Grid_MouseDown">
 
         <Label x:Name="label" Content="Anime Downloader" Margin="10,-1,0,0" VerticalAlignment="Top" Foreground="#FFB6B6B6"
@@ -22,6 +22,8 @@
             <Button x:Name="SettingBtn" Content="S" Width="25" BorderThickness="0" Margin="0" Background="#FF343434"
 			        Foreground="#FFB6B6B6" Padding="0" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right"
 			        Click="SettingBtn_Click" />
+            <Button x:Name="RSSBtn" Content="RSS" Width="25" BorderThickness="0" Margin="5,0,0,0" Background="#FF343434"
+            	Foreground="#FFB6B6B6" Padding="0" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Click="RSSBtn_Click" />
 
         </StackPanel>
         <Label x:Name="label2" Content="Torrent program Path" HorizontalAlignment="Left" Margin="10,36,0,0"
@@ -55,8 +57,8 @@
             <ComboBoxItem Content="720p" BorderThickness="0" Background="#FFB6B6B6" HorizontalContentAlignment="Center"/>
             <ComboBoxItem Content="1080p" BorderThickness="0" Background="#FFB6B6B6" HorizontalContentAlignment="Center"/>
         </ComboBox>
-        <Button x:Name="SaveAllBtn" Content="Save" Width="505" BorderThickness="0" Margin="0,299,10,0" Background="#FF343434"
-        	Foreground="#FFB6B6B6" Padding="0" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Click="SaveAllBtn_Click" />
+        <Button x:Name="SaveAllBtn" Content="Save" BorderThickness="0" Margin="10,295,10,0" Background="#FF343434"
+        	Foreground="#FFB6B6B6" Padding="0" Height="25" VerticalAlignment="Top" Click="SaveAllBtn_Click" />
 
         <ComboBox x:Name="RSSFeedbox" Height="23" Margin="140,268,10,0"
         	VerticalAlignment="Top" Background="#FFB6B6B6" Padding="0,2,0,0" IsReadOnly="True" >
@@ -66,7 +68,7 @@
         <Label x:Name="label6_Copy2" Content="RSS Feed" HorizontalAlignment="Left" Margin="10,266,0,0" VerticalAlignment="Top"
         	Foreground="#FFB6B6B6" Height="25" />
 
-        <ListBox x:Name="listBox" Margin="1,56,0,25" MouseDoubleClick="listBox_MouseDoubleClick" BorderThickness="0" HorizontalAlignment="Left" Width="523" MouseRightButtonUp="listBox_MouseRightButtonUp" >
+        <ListBox x:Name="listBox" Margin="1,56,1,25" MouseDoubleClick="listBox_MouseDoubleClick" BorderThickness="0" MouseRightButtonUp="listBox_MouseRightButtonUp" >
             <ListBox.ContextMenu>
                 <ContextMenu Margin="-40,0,0,0">
 
@@ -86,13 +88,41 @@
             <!--<ListBoxItem Content="Downloaded" IsEnabled="False" Tag="blank" />
             <Separator IsEnabled="False" Tag="blank" />-->
         </ListBox>
-        <ListBox x:Name="listBox1" Margin="1,25,1,292" BorderThickness="0" Width="523" VerticalAlignment="Top" Height="31" >
+        <ListBox x:Name="listBox1" Margin="1,25,1,292" BorderThickness="0" VerticalAlignment="Top" Height="31" >
             <ListBoxItem Content="Downloaded" IsEnabled="False" Tag="blank" />
             <Separator IsEnabled="False" Tag="blank" />
         </ListBox>
-        <Label x:Name="CounterLabel" Content="{Binding Source={x:Static p:Settings.Default}, Path=RefreshCounter}" Foreground="#FFB6B6B6" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,3,0" />
+        <Label x:Name="CounterLabel" Content="{Binding Source={x:Static p:Settings.Default}, Path=RefreshCounter}" Foreground="#FFB6B6B6" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,26,0" />
         <Label x:Name="status" Content="{Binding Source={x:Static p:Settings.Default}, Path=StatusLabel}"
 		       Foreground="#FFB6B6B6" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,0,0,0" />
+        <StackPanel x:Name="Rssfeedpanel" Margin="0,0,318,325" Background="#FF4D4D4D" Orientation="Horizontal" Visibility="Collapsed">
+            <Label x:Name="label1" Content="Filter" Margin="3,0,0,0" Foreground="#FFB6B6B6" Height="25" VerticalAlignment="Top"/>
+            <ComboBox x:Name="FilterComboBox" Text="" Width="120" VerticalContentAlignment="Center" IsReadOnly="True" SelectionChanged="textBox_SelectionChanged" BorderThickness="0" VerticalAlignment="Top">
+                <ComboBoxItem Content="Show all"/>
+                <ComboBoxItem Content="Filter remakes"/>
+                <ComboBoxItem Content="Trusted only"/>
+                <ComboBoxItem Content="A+ only"/>
+            </ComboBox>
+            <Button x:Name="Refreshbtn" Content="Refresh" Width="45" Click="Refreshbtn_Click" BorderThickness="0" Background="#FF343434" Foreground="#FFB6B6B6" Margin="1,0,0,0" VerticalAlignment="Top" Height="25"></Button>
+        </StackPanel>
+        <StackPanel x:Name="CloseStackPanel" Orientation="Horizontal" FlowDirection="RightToLeft" HorizontalAlignment="Right" Width="318" Margin="0,0,0,325" Visibility="Collapsed">
+            <Button x:Name="button_Copy" Content="X" Width="25" BorderThickness="0" Background="#FF343434" Foreground="#FFB6B6B6" Height="25" VerticalAlignment="Top"  Click="button_Copy_Click" HorizontalAlignment="Right"/>
+            <Button x:Name="button" Content="Search" Width="93" Click="button_Click_1" BorderThickness="0" Background="#FF343434" Foreground="#FFB6B6B6" Height="25" VerticalAlignment="Top"/>
+            <TextBox x:Name="searchbox" TextWrapping="Wrap" Width="173" VerticalContentAlignment="Center" Margin="0" BorderThickness="0" Foreground="#FFB6B6B6" Background="#FF343434" VerticalAlignment="Top" Height="25" FlowDirection="LeftToRight" GotFocus="searchbox_GotFocus" Text="Search..." LostFocus="searchbox_LostFocus"/>
+        </StackPanel>
+        <ListBox x:Name="FeeditemBox" BorderBrush="Black" BorderThickness="0,1,0,0" MouseDoubleClick="FeeditemBox_MouseDoubleClick" VerticalAlignment="Stretch" Margin="0,25" Visibility="Collapsed"/>
+
+        <StackPanel x:Name="Savepanel" HorizontalAlignment="Center" Height="105"  VerticalAlignment="Center" Width="400" Background="#FF4D4D4D" Visibility="Collapsed">
+            <StackPanel Height="25" Orientation="Horizontal" VerticalAlignment="Top" Margin="0,2,2,0">
+                <Button x:Name="ClosefeedpanelBtn_Copy" Content="X" HorizontalAlignment="Right" Width="25" BorderThickness="0" Margin="2,0,0,0"
+            		    Background="#FF343434" Foreground="#FFB6B6B6" Padding="0" Click="ClosefeedpanelBtn_Copy_Click"/>
+                <TextBox x:Name="Filenamelabel" Text="Filename" Foreground="#FFB6B6B6" Margin="1,0,0,0" FlowDirection="LeftToRight" Padding="3,5" FontSize="9.333" Background="#FF2C2C2C" BorderThickness="0" AutoWordSelection="True" IsReadOnly="True" MaxHeight="25" MaxLines="1" Width="369"/>
+            </StackPanel>
+            <Label x:Name="folderlbl" Content="Folderpath" Foreground="#FFB6B6B6" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3,0,0,0"/>
+            <TextBox x:Name="Folderbox" Height="25" TextWrapping="Wrap" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderThickness="0,1" Margin="2,0"/>
+            <Button x:Name="DownloadBtn" Content="Download" BorderThickness="0" Margin="2,1,2,0"
+            	Background="#FF343434" Foreground="#FFB6B6B6" Padding="0" Height="25" Click="DownloadBtn_Click"/>
+        </StackPanel>
 
     </Grid>
 </Window>

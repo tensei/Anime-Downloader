@@ -23,7 +23,7 @@ namespace Anime_Downloader
             var feed = SyndicationFeed.Load(reader);
             foreach (var mangs in feed.Items)
             {
-                titleurl.Add(mangs.Title.Text + "[]" + mangs.Links[0].Uri.AbsoluteUri);
+                titleurl.Add(mangs.Title.Text + "[]" + mangs.Links[0].Uri.AbsoluteUri + "[]"+ mangs.Summary.Text);
             }
             return titleurl;
         }
