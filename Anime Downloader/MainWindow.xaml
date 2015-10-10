@@ -97,7 +97,7 @@
 		       Foreground="#FFB6B6B6" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,0,0,0" />
         <StackPanel x:Name="Rssfeedpanel" Margin="0,0,318,325" Background="#FF4D4D4D" Orientation="Horizontal" Visibility="Collapsed">
             <Label x:Name="label1" Content="Filter" Margin="3,0,0,0" Foreground="#FFB6B6B6" Height="25" VerticalAlignment="Top"/>
-            <ComboBox x:Name="FilterComboBox" Text="" Width="120" VerticalContentAlignment="Center" IsReadOnly="True" SelectionChanged="textBox_SelectionChanged" BorderThickness="0" VerticalAlignment="Top">
+            <ComboBox x:Name="FilterComboBox" Text="" Width="120" VerticalContentAlignment="Center" IsReadOnly="True" SelectionChanged="textBox_SelectionChanged" BorderThickness="0" VerticalAlignment="Top" Height="25">
                 <ComboBoxItem Content="Show all"/>
                 <ComboBoxItem Content="Filter remakes"/>
                 <ComboBoxItem Content="Trusted only"/>
