@@ -95,7 +95,7 @@
         <Label x:Name="CounterLabel" Content="{Binding Source={x:Static p:Settings.Default}, Path=RefreshCounter}" Foreground="#FFB6B6B6" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,26,0" />
         <Label x:Name="status" Content="{Binding Source={x:Static p:Settings.Default}, Path=StatusLabel}"
 		       Foreground="#FFB6B6B6" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,0,0,0" />
-        <StackPanel x:Name="Rssfeedpanel" Margin="0,0,318,325" Background="#FF4D4D4D" Orientation="Horizontal" Visibility="Collapsed">
+        <StackPanel x:Name="Rssfeedpanel" Margin="0,25,0,0" Background="#FF4D4D4D" Orientation="Horizontal" VerticalAlignment="Top" Visibility="Collapsed">
             <Label x:Name="label1" Content="Filter" Margin="3,0,0,0" Foreground="#FFB6B6B6" Height="25" VerticalAlignment="Top"/>
             <ComboBox x:Name="FilterComboBox" Text="" Width="120" VerticalContentAlignment="Center" IsReadOnly="True" SelectionChanged="textBox_SelectionChanged" BorderThickness="0" VerticalAlignment="Top" Height="25">
                 <ComboBoxItem Content="Show all"/>
@@ -105,12 +105,11 @@
             </ComboBox>
             <Button x:Name="Refreshbtn" Content="Refresh" Width="45" Click="Refreshbtn_Click" BorderThickness="0" Background="#FF343434" Foreground="#FFB6B6B6" Margin="1,0,0,0" VerticalAlignment="Top" Height="25"></Button>
         </StackPanel>
-        <StackPanel x:Name="CloseStackPanel" Orientation="Horizontal" FlowDirection="RightToLeft" HorizontalAlignment="Right" Width="318" Margin="0,0,0,325" Visibility="Collapsed">
-            <Button x:Name="button_Copy" Content="X" Width="25" BorderThickness="0" Background="#FF343434" Foreground="#FFB6B6B6" Height="25" VerticalAlignment="Top"  Click="button_Copy_Click" HorizontalAlignment="Right"/>
+        <StackPanel x:Name="CloseStackPanel" Orientation="Horizontal" FlowDirection="RightToLeft" HorizontalAlignment="Right" Width="318" Margin="0,25,0,0" Height="25" VerticalAlignment="Top" Visibility="Collapsed">
             <Button x:Name="button" Content="Search" Width="93" Click="button_Click_1" BorderThickness="0" Background="#FF343434" Foreground="#FFB6B6B6" Height="25" VerticalAlignment="Top"/>
-            <TextBox x:Name="searchbox" TextWrapping="Wrap" Width="173" VerticalContentAlignment="Center" Margin="0" BorderThickness="0" Foreground="#FFB6B6B6" Background="#FF343434" VerticalAlignment="Top" Height="25" FlowDirection="LeftToRight" GotFocus="searchbox_GotFocus" Text="Search..." LostFocus="searchbox_LostFocus"/>
+            <TextBox x:Name="searchbox" TextWrapping="Wrap" Width="173" VerticalContentAlignment="Center" Margin="1,0,0,0" BorderThickness="0" Foreground="#FFB6B6B6" Background="#FF343434" VerticalAlignment="Top" Height="25" FlowDirection="LeftToRight" GotFocus="searchbox_GotFocus" Text="Search..." LostFocus="searchbox_LostFocus"/>
         </StackPanel>
-        <ListBox x:Name="FeeditemBox" BorderBrush="Black" BorderThickness="0,1,0,0" MouseDoubleClick="FeeditemBox_MouseDoubleClick" VerticalAlignment="Stretch" Margin="0,25" Visibility="Collapsed"/>
+        <ListBox x:Name="FeeditemBox" BorderBrush="Black" BorderThickness="0,1,0,0" MouseDoubleClick="FeeditemBox_MouseDoubleClick" VerticalAlignment="Stretch" Margin="0,50,0,25" Visibility="Collapsed"/>
 
         <StackPanel x:Name="Savepanel" HorizontalAlignment="Center" Height="105"  VerticalAlignment="Center" Width="400" Background="#FF4D4D4D" Visibility="Collapsed">
             <StackPanel Height="25" Orientation="Horizontal" VerticalAlignment="Top" Margin="0,2,2,0">

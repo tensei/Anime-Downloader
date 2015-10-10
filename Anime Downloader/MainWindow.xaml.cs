@@ -689,13 +689,6 @@ namespace Anime_Downloader
             FeeditemBox.ScrollIntoView(FeeditemBox.Items[0]);
         }
 
-        private void button_Copy_Click(object sender, RoutedEventArgs e)
-        {
-            Rssfeedpanel.Visibility = Visibility.Collapsed;
-            FeeditemBox.Visibility = Visibility.Collapsed;
-            CloseStackPanel.Visibility = Visibility.Collapsed;
-        }
-
         private void searchbox_GotFocus(object sender, RoutedEventArgs e)
         {
             if (searchbox.Text == "Search...")
