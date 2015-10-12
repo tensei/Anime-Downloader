@@ -22,6 +22,7 @@ using Newtonsoft.Json.Linq;
 using Color = System.Windows.Media.Color;
 using MenuItem = System.Windows.Controls.MenuItem;
 using MessageBox = System.Windows.MessageBox;
+using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 using SystemColors = System.Windows.SystemColors;
 
 namespace Anime_Downloader
@@ -71,10 +72,6 @@ namespace Anime_Downloader
             c.CheckFile();
             jsonFile = JObject.Parse(File.ReadAllText(Filepath));
 
-            ThreadStart childref = CheckNow;
-            var childThread = new Thread(childref) {IsBackground = true};
-            childThread.Start();
-
             FillProcessList();
             notifyIcon.ContextMenu = contextMenu1;
             notifyIcon.ContextMenu.MenuItems.Add(ExitMenuItem);
@@ -100,6 +97,7 @@ namespace Anime_Downloader
             OnGoingFolderTextBox.Text = jsonFile["Ongoing_Folder"].ToString();
             RefreshTimebox.Text = jsonFile["Refresh_Time"].ToString();
             RSSFeedbox.Text = jsonFile["RSS"].ToString();
+            
             Settings.Default.RSS = jsonFile["RSS"].ToString();
 
             OngoingFolder = jsonFile["Ongoing_Folder"].ToString();
@@ -108,6 +106,10 @@ namespace Anime_Downloader
             Res = jsonFile["Resolution"].ToString();
             Settings.Default.StatusLabel = "Status: Setting things up...";
             PopulateListbox();
+
+            ThreadStart childref = CheckNow;
+            var childThread = new Thread(childref) { IsBackground = true };
+            childThread.Start();
         }
 
         private void PopulateListbox()
@@ -303,6 +305,7 @@ namespace Anime_Downloader
                                 }
                             }
                         }
+                        Settings.Default.RefreshCounter++;
                         _timer++;
                         client.Dispose();
                     }
@@ -702,6 +705,71 @@ namespace Anime_Downloader
             if (searchbox.Text == "")
             {
                 searchbox.Text = "Search...";
+            }
+        }
+
+        public string OpenFolderDialog()
+        {
+            using (FolderBrowserDialog f = new FolderBrowserDialog())
+            {
+                if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    return f.SelectedPath;
+                }
+                return "null";
+            }
+        }
+
+        private void Folderbox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var result = OpenFolderDialog();
+            if (!result.Equals("null"))
+            {
+                Folderbox.Text = result;
+            }
+        }
+
+        private void TorrentClientTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var path = OpenFolderDialog();
+            if (Directory.Exists(path))
+            {
+                
+                var x = new List<string>(Directory.EnumerateFiles(path));
+                if (x.Contains(Path.Combine(path, "deluge-console.exe")))
+                {
+                    TorrentClientTextBox.Text = Path.Combine(path, "deluge-console.exe");
+                }
+                else if(x.Contains(Path.Combine(path, "utorrent.exe")))
+                {
+                    TorrentClientTextBox.Text = Path.Combine(path, "utorrent.exe");
+                }
+                else if (x.Contains(Path.Combine(path, "uTorrent.exe")))
+                {
+                    TorrentClientTextBox.Text = Path.Combine(path, "uTorrent.exe");
+                }
+                else
+                {
+                    MessageBox.Show($"Couldn't find deluge-console.exe or utorrent.exe.\nIs this the correct Path?\n\n {path}", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        private void OnGoingFolderTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var result = OpenFolderDialog();
+            if (!result.Equals("null"))
+            {
+                OnGoingFolderTextBox.Text = result;
+            }
+        }
+
+        private void TorrentFilesTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var result = OpenFolderDialog();
+            if (!result.Equals("null"))
+            {
+                TorrentFilesTextBox.Text = result;
             }
         }
     }

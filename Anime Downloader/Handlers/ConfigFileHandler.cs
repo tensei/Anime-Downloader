@@ -24,6 +24,7 @@ namespace Anime_Downloader
             //    Directory.CreateDirectory("Settings");
             //}
             var file = new JObject();
+            file["RSS"] = "http://www.nyaa.se/?page=rss&cats=1_37";
             file["Groups"] = JToken.FromObject(new List<string> {"[FFF", "[Ani", "[Viv", "[Ase", "[JnM", "[Com"});
             file["Exceptions"] = JToken.FromObject(new List<string>());
             file["Resolution"] = "720p";
