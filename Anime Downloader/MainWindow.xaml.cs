@@ -308,6 +308,7 @@ namespace Anime_Downloader
                         Settings.Default.RefreshCounter++;
                         _timer++;
                         client.Dispose();
+                        GC.Collect();
                     }
                     _timer = int.Parse(jsonFile["Refresh_Time"].ToString());
                 }
@@ -535,6 +536,7 @@ namespace Anime_Downloader
                             FeeditemBox.Items.Add(i);
                         }
                         FeeditemBox.ScrollIntoView(FeeditemBox.Items[0]);
+                        GC.Collect();
                         break;
                     }
                 case "Trusted only":
@@ -555,6 +557,7 @@ namespace Anime_Downloader
                             FeeditemBox.Items.Add(i);
                         }
                         FeeditemBox.ScrollIntoView(FeeditemBox.Items[0]);
+                        GC.Collect();
                         break;
                     }
                 case "Filter remakes":
@@ -575,6 +578,7 @@ namespace Anime_Downloader
                             FeeditemBox.Items.Add(i);
                         }
                         FeeditemBox.ScrollIntoView(FeeditemBox.Items[0]);
+                        GC.Collect();
                         break;
                     }
                 case "A+ only":
@@ -595,6 +599,7 @@ namespace Anime_Downloader
                             FeeditemBox.Items.Add(i);
                         }
                         FeeditemBox.ScrollIntoView(FeeditemBox.Items[0]);
+                        GC.Collect();
                         break;
                     }
             }
@@ -679,6 +684,7 @@ namespace Anime_Downloader
                 i.Tag = Path.Combine(Folderbox.Text.Trim(), Filenamelabel.Text.Trim());
                 listBox.Items.Insert(0, i);
                 Savepanel.Visibility = Visibility.Collapsed;
+                GC.Collect();
             }
             catch (Exception se)
             {
