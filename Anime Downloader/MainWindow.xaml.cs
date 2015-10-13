@@ -63,7 +63,9 @@ namespace Anime_Downloader
         private readonly string Filepath = "AnimeDownloader.json";
         private JObject jsonFile;
         private int _timer = 5;
-        
+
+        public ThreadStart MainStart;
+        public Thread MainThread;
         //private JObject jsonFile;
 
         public MainWindow()
@@ -107,9 +109,9 @@ namespace Anime_Downloader
             Settings.Default.StatusLabel = "Status: Setting things up...";
             PopulateListbox();
 
-            ThreadStart childref = CheckNow;
-            var childThread = new Thread(childref) { IsBackground = true };
-            childThread.Start();
+            MainStart = CheckNow;
+            MainThread = new Thread(MainStart) { IsBackground = true };
+            MainThread.Start();
         }
 
         private void PopulateListbox()
@@ -612,6 +614,7 @@ namespace Anime_Downloader
 
         private void button_Click_1(object sender, RoutedEventArgs e)
         {
+            if(searchbox.Text.Equals("Search...")) return;
             FeeditemBox.Items.Clear();
             var feed = neko.Get_feed_titles(Rssfeed + "&term=" + searchbox.Text.Trim().Replace(" ", "+"));
             foreach (var item in feed)
