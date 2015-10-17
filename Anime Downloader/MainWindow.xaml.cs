@@ -149,19 +149,7 @@ namespace Anime_Downloader
         private void ExitMenuItemClick(object Sender, EventArgs e)
         {
             // Close the form, which closes the application. 
-            GetItemInfos getItemInfos = new GetItemInfos();
-            SaveOnExit saveOnExit = new SaveOnExit();
-            var listboxitem = new List<object>();
-            foreach (var item in listBox.Items)
-            {
-                var it = ((ListBoxItem)item);
-                if (!it.Foreground.Equals(ReadColorFg))
-                {
-                    listboxitem.Add(item);
-                }
-            }
-            var items = getItemInfos.ConverttostringList(listboxitem);
-            saveOnExit.Saveitems(items);
+            savelist();
             notifyIcon.Dispose();
             Close();
         }
@@ -303,7 +291,9 @@ namespace Anime_Downloader
                                             break;
                                     }
                                     case "nope":
+                                    {
                                         break;
+                                    }
                                 }
                             }
                         }
@@ -311,6 +301,7 @@ namespace Anime_Downloader
                         _timer++;
                         client.Dispose();
                         GC.Collect();
+                        Dispatcher.BeginInvoke(new Action(savelist));
                     }
                     _timer = int.Parse(jsonFile["Refresh_Time"].ToString());
                 }
@@ -333,19 +324,7 @@ namespace Anime_Downloader
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            GetItemInfos getItemInfos = new GetItemInfos();
-            SaveOnExit saveOnExit = new SaveOnExit();
-            var listboxitem = new List<object>();
-            foreach (var item in listBox.Items)
-            {
-                var it = ((ListBoxItem) item);
-                if (!it.Foreground.Equals(ReadColorFg))
-                {
-                    listboxitem.Add(item);
-                }
-            }
-            var items = getItemInfos.ConverttostringList(listboxitem);
-            saveOnExit.Saveitems(items);
+            savelist();
             notifyIcon.Dispose();
             Close();
         }
@@ -440,10 +419,10 @@ namespace Anime_Downloader
 
         private void SaveAllBtn_Click(object sender, RoutedEventArgs e)
         {
-            var groups = GroupsTextBox.Text.Split(new[] {", "}, StringSplitOptions.None).Where(s => s.Length == 4).ToList();
+            var list = GroupsTextBox.Text.Split(new[] {", "}, StringSplitOptions.None).Where(s => s.Length == 4).ToList();
             
-            GroupsTextBox.Text = string.Join(", ", groups);
-            jsonFile["Groups"] = JToken.FromObject(groups);
+            GroupsTextBox.Text = string.Join(", ", list);
+            jsonFile["Groups"] = JToken.FromObject(list);
             jsonFile["Resolution"] =((ComboBoxItem)comboBox.SelectedItem).Content.ToString();
 
             jsonFile["Torrent_Client"] = TorrentClientTextBox.Text;
@@ -492,118 +471,115 @@ namespace Anime_Downloader
 
         public SolidColorBrush GetStatus(string summary)
         {
-            SolidColorBrush Trusted = new SolidColorBrush(Color.FromArgb(255, 152, 217, 168));
-            SolidColorBrush Aplus = new SolidColorBrush(Color.FromArgb(255, 96, 176, 240));
-            SolidColorBrush Remake = new SolidColorBrush(Color.FromArgb(255, 240, 176, 128));
-            SolidColorBrush Normal = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
+            SolidColorBrush trusted = new SolidColorBrush(Color.FromArgb(255, 152, 217, 168));
+            SolidColorBrush aplus = new SolidColorBrush(Color.FromArgb(255, 96, 176, 240));
+            SolidColorBrush remake = new SolidColorBrush(Color.FromArgb(255, 240, 176, 128));
+            SolidColorBrush normal = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
             if (summary.ToLower().Contains("remake"))
             {
-                return Remake;
+                return remake;
             }
             else if (summary.ToLower().Contains("a+ - trusted"))
             {
-                return Aplus;
+                return aplus;
             }
             else if (summary.ToLower().Contains("trusted"))
             {
-                return Trusted;
+                return trusted;
             }
             else
             {
-                return Normal;
+                return normal;
             }
 
         }
 
         public void FillRSSbox()
         {
+            if(FilterComboBox.SelectedIndex.Equals(-1)) return;
             var selected = ((ComboBoxItem)FilterComboBox.SelectedItem);
             switch (selected.Content.ToString())
             {
                 case "Show all":
+                {
+                    FeeditemBox.Items.Clear();
+                    var feed = neko.Get_feed_titles("http://www.nyaa.se/?page=rss&cats=1_37");
+                    Rssfeed = "http://www.nyaa.se/?page=rss&cats=1_37";
+                    foreach (var item in feed)
                     {
-                        FeeditemBox.Items.Clear();
-                        var feed = neko.Get_feed_titles("http://www.nyaa.se/?page=rss&cats=1_37");
-                        Rssfeed = "http://www.nyaa.se/?page=rss&cats=1_37";
-                        foreach (var item in feed)
-                        {
-                            var isplit = item.Split(new[] { "[]" }, StringSplitOptions.None);
-                            ListBoxItem i = new ListBoxItem();
-                            i.Content = isplit[0];
-                            i.Tag = isplit[1];
-                            i.ToolTip = isplit[2];
-                            i.Background = GetStatus(isplit[2]);
-                            i.BorderBrush = borderBrush;
-                            i.BorderThickness = new Thickness(1, 1, 1, 0);
-                            FeeditemBox.Items.Add(i);
-                        }
-                        FeeditemBox.ScrollIntoView(FeeditemBox.Items[0]);
-                        GC.Collect();
-                        break;
+                        var isplit = item.Split(new[] { "[]" }, StringSplitOptions.None);
+                        ListBoxItem i = new ListBoxItem();
+                        i.Content = isplit[0];
+                        i.Tag = isplit[1];
+                        i.ToolTip = isplit[2];
+                        i.Background = GetStatus(isplit[2]);
+                        i.BorderBrush = borderBrush;
+                        i.BorderThickness = new Thickness(1, 1, 1, 0);
+                        FeeditemBox.Items.Add(i);
                     }
+                    FeeditemBox.ScrollIntoView(FeeditemBox.Items[0]);
+                    GC.Collect();
+                } break;
                 case "Trusted only":
+                {
+                    FeeditemBox.Items.Clear();
+                    var feed = neko.Get_feed_titles("http://www.nyaa.se/?page=rss&cats=1_37&filter=2");
+                    Rssfeed = "http://www.nyaa.se/?page=rss&cats=1_37&filter=2";
+                    foreach (var item in feed)
                     {
-                        FeeditemBox.Items.Clear();
-                        var feed = neko.Get_feed_titles("http://www.nyaa.se/?page=rss&cats=1_37&filter=2");
-                        Rssfeed = "http://www.nyaa.se/?page=rss&cats=1_37&filter=2";
-                        foreach (var item in feed)
-                        {
-                            var isplit = item.Split(new[] { "[]" }, StringSplitOptions.None);
-                            ListBoxItem i = new ListBoxItem();
-                            i.Content = isplit[0];
-                            i.Tag = isplit[1];
-                            i.ToolTip = isplit[2];
-                            i.Background = GetStatus(isplit[2]);
-                            i.BorderBrush = borderBrush;
-                            i.BorderThickness = new Thickness(1, 1, 1, 0);
-                            FeeditemBox.Items.Add(i);
-                        }
-                        FeeditemBox.ScrollIntoView(FeeditemBox.Items[0]);
-                        GC.Collect();
-                        break;
+                        var isplit = item.Split(new[] { "[]" }, StringSplitOptions.None);
+                        ListBoxItem i = new ListBoxItem();
+                        i.Content = isplit[0];
+                        i.Tag = isplit[1];
+                        i.ToolTip = isplit[2];
+                        i.Background = GetStatus(isplit[2]);
+                        i.BorderBrush = borderBrush;
+                        i.BorderThickness = new Thickness(1, 1, 1, 0);
+                        FeeditemBox.Items.Add(i);
                     }
+                    FeeditemBox.ScrollIntoView(FeeditemBox.Items[0]);
+                    GC.Collect();
+                }break;
                 case "Filter remakes":
+                {
+                    FeeditemBox.Items.Clear();
+                    var feed = neko.Get_feed_titles("http://www.nyaa.se/?page=rss&cats=1_37&filter=1");
+                    Rssfeed = "http://www.nyaa.se/?page=rss&cats=1_37&filter=1";
+                    foreach (var item in feed)
                     {
-                        FeeditemBox.Items.Clear();
-                        var feed = neko.Get_feed_titles("http://www.nyaa.se/?page=rss&cats=1_37&filter=1");
-                        Rssfeed = "http://www.nyaa.se/?page=rss&cats=1_37&filter=1";
-                        foreach (var item in feed)
-                        {
-                            var isplit = item.Split(new[] { "[]" }, StringSplitOptions.None);
-                            ListBoxItem i = new ListBoxItem();
-                            i.Content = isplit[0];
-                            i.Tag = isplit[1];
-                            i.ToolTip = isplit[2];
-                            i.Background = GetStatus(isplit[2]);
-                            i.BorderBrush = borderBrush;
-                            i.BorderThickness = new Thickness(1, 1, 1, 0);
-                            FeeditemBox.Items.Add(i);
-                        }
-                        FeeditemBox.ScrollIntoView(FeeditemBox.Items[0]);
-                        GC.Collect();
-                        break;
+                        var isplit = item.Split(new[] { "[]" }, StringSplitOptions.None);
+                        ListBoxItem i = new ListBoxItem();
+                        i.Content = isplit[0];
+                        i.Tag = isplit[1];
+                        i.ToolTip = isplit[2];
+                        i.Background = GetStatus(isplit[2]);
+                        i.BorderBrush = borderBrush;
+                        i.BorderThickness = new Thickness(1, 1, 1, 0);
+                        FeeditemBox.Items.Add(i);
                     }
+                    FeeditemBox.ScrollIntoView(FeeditemBox.Items[0]);
+                    GC.Collect();
+                }break;
                 case "A+ only":
+                {
+                    FeeditemBox.Items.Clear();
+                    var feed = neko.Get_feed_titles("http://www.nyaa.se/?page=rss&cats=1_37&filter=3");
+                    Rssfeed = "http://www.nyaa.se/?page=rss&cats=1_37&filter=3";
+                    foreach (var item in feed)
                     {
-                        FeeditemBox.Items.Clear();
-                        var feed = neko.Get_feed_titles("http://www.nyaa.se/?page=rss&cats=1_37&filter=3");
-                        Rssfeed = "http://www.nyaa.se/?page=rss&cats=1_37&filter=3";
-                        foreach (var item in feed)
-                        {
-                            var isplit = item.Split(new[] { "[]" }, StringSplitOptions.None);
-                            ListBoxItem i = new ListBoxItem();
-                            i.Content = isplit[0];
-                            i.Tag = isplit[1];
-                            i.ToolTip = isplit[2];
-                            i.Background = GetStatus(isplit[2]);
-                            i.BorderBrush = borderBrush;
-                            i.BorderThickness = new Thickness(1, 1, 1, 0);
-                            FeeditemBox.Items.Add(i);
-                        }
-                        FeeditemBox.ScrollIntoView(FeeditemBox.Items[0]);
-                        GC.Collect();
-                        break;
+                        var isplit = item.Split(new[] { "[]" }, StringSplitOptions.None);
+                        ListBoxItem i = new ListBoxItem();
+                        i.Content = isplit[0];
+                        i.Tag = isplit[1];
+                        i.ToolTip = isplit[2];
+                        i.Background = GetStatus(isplit[2]);
+                        i.BorderBrush = borderBrush;
+                        i.BorderThickness = new Thickness(1, 1, 1, 0);
+                        FeeditemBox.Items.Add(i);
                     }
+                    FeeditemBox.ScrollIntoView(FeeditemBox.Items[0]);
+                    GC.Collect();
+                }break;
             }
         }
 
@@ -653,6 +629,8 @@ namespace Anime_Downloader
 
         private void FeeditemBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            if(FeeditemBox.SelectedIndex.Equals(-1)) return;
+
             var selectediten = ((ListBoxItem) FeeditemBox.SelectedItem);
             Savepanel.Visibility = Visibility.Visible;
             Filenamelabel.Text = selectediten.Content.ToString();
@@ -780,6 +758,23 @@ namespace Anime_Downloader
             {
                 TorrentFilesTextBox.Text = result;
             }
+        }
+
+        public void savelist()
+        {
+            GetItemInfos getItemInfos = new GetItemInfos();
+            SaveOnExit saveOnExit = new SaveOnExit();
+            var listboxitem = new List<object>();
+            foreach (var item in listBox.Items)
+            {
+                var it = ((ListBoxItem)item);
+                if (!it.Foreground.Equals(ReadColorFg))
+                {
+                    listboxitem.Add(item);
+                }
+            }
+            var items = getItemInfos.ConverttostringList(listboxitem);
+            saveOnExit.Saveitems(items);
         }
     }
 }
