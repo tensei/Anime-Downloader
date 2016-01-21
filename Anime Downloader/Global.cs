@@ -12,6 +12,7 @@ namespace Anime_Downloader
         private static string _torrentFiles = "";
         private static string _torrentClient = "";
         private static string _resolution = "";
+        public static List<string> Groups = new List<string>();
 
         private static readonly List<AnimeViewModel> _animeInternal = new List<AnimeViewModel>();
         private static JObject _jsonFile;
@@ -20,6 +21,14 @@ namespace Anime_Downloader
 
         public static List<AnimeViewModel> Anime = new List<AnimeViewModel>(_animeInternal);
 
+        public static string GroupAdd
+        {
+            set
+            {
+                if (Groups.Contains(value)) return;
+                Groups.Insert(0, value);
+            }
+        }
         public static AnimeViewModel AnimeAdd
         {
             set

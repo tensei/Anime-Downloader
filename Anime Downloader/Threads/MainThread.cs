@@ -15,7 +15,6 @@ namespace Anime_Downloader.Threads
         public static List<string> Torrents = new List<string>();
 
         public static List<string> done = new List<string>();
-        public static List<string> groups = new List<string>();
         public static List<string> last = new List<string>();
 
         public static async void CheckNow()
@@ -43,7 +42,6 @@ namespace Anime_Downloader.Threads
                     var client = new WebClient();
                     Settings.Default.StatusLabel = "Status: Checking in " + Global.Timer + " seconds.";
                     Torrents = new List<string>(Directory.EnumerateFiles(Global.TorrentFiles));
-                    var ongoing = Tools.GetOnGoing();
                     List<NyaaseRssViewModel> rssitems;
                     try
                     {
@@ -56,8 +54,7 @@ namespace Anime_Downloader.Threads
                     }
                     if (rssitems.Count > 1)
                     {
-                        var processes = Tools.FillProcessList();
-                        ongoing = Tools.GetOnGoing();
+                        var ongoing = Tools.GetOnGoing();
                         foreach (var item in rssitems)
                         {
                             var title = item.Name;
@@ -67,9 +64,9 @@ namespace Anime_Downloader.Threads
                                 filename.Replace("Anime Koi", "Anime-Koi");
                                 switch (
                                     CheckTitleHandler.CheckTitle(title, filename, Global.TorrentFiles,
-                                        Global.TorrentClient, Global.Res, processes, groups, last))
+                                        Global.TorrentClient, Global.Res, Global.Groups, last))
                                 {
-                                    case "uTorrent":
+                                    case "utorrent":
                                     {
                                         client.DownloadFile(new Uri(link),
                                             Global.TorrentFiles + @"\" + title + @".torrent");
@@ -84,7 +81,7 @@ namespace Anime_Downloader.Threads
                                         Thread.Sleep(300);
                                         break;
                                     }
-                                    case "Deluge":
+                                    case "deluge":
                                     {
                                         client.DownloadFile(new Uri(link),
                                             Global.TorrentFiles + @"\" + title.Replace("'", string.Empty) + @".torrent");

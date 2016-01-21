@@ -46,6 +46,7 @@ namespace Anime_Downloader
             foreach (var child in jsonFile["Groups"].Children())
             {
                 Settings.Default.Groups.Add(child.ToString());
+                Global.GroupAdd = child.ToString();
             }
             //foreach (var Item in Settings.Default.Listbox)
             //{

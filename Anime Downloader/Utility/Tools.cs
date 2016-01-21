@@ -58,7 +58,7 @@ namespace Anime_Downloader.Utility
             foreach (var theprocess in processlist)
             {
                 var pname = theprocess.ProcessName;
-                processes.Add(pname);
+                processes.Add(pname.ToLower());
             }
             //if (TorrentClientTextBox.Text.ToLower().Contains("utorrent") && !processes.Contains("uTorrent"))
             //{
@@ -77,7 +77,8 @@ namespace Anime_Downloader.Utility
             {
                 Tag = Global.OngoingFolder + @"\" + tag,
                 Name = content,
-                Added = DateTime.Now
+                Added = DateTime.Now,
+                Status = "Not Watched"
             };
             if (!isenabled)
                 itmheader.Status = "Watched";

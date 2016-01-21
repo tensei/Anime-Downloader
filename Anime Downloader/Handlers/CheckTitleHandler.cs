@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using Anime_Downloader.Properties;
+using Anime_Downloader.Utility;
 
 namespace Anime_Downloader.Handlers
 {
@@ -15,8 +16,7 @@ namespace Anime_Downloader.Handlers
     {
         public static List<string> done = new List<string>();
 
-        public static string CheckTitle(string title, string filename, string TorrentFiles, string TorrentClient, string res,
-            List<string> processes, List<string> groups, List<string> last )
+        public static string CheckTitle(string title, string filename, string TorrentFiles, string TorrentClient, string res, List<string> groups, List<string> last )
         {
             var Torrents = new List<string>(Directory.EnumerateFiles(TorrentFiles));
             if (title.Contains(filename) && title.Contains(res) && !last.Contains(title) &&
@@ -26,18 +26,17 @@ namespace Anime_Downloader.Handlers
                     !done.Contains(title))
                 {
                     //download file and add it to torrent downloader
-                    if (TorrentClient.ToLower().Contains("utorrent") &&
-                        processes.Contains("uTorrent"))
+                    if (TorrentClient.ToLower().Contains("utorrent"))
                     {
-                        if (processes.Contains("uTorrent"))
+                        if (Tools.FillProcessList().Contains("utorrent"))
                         {
-                            return "utTorrent";
+                            return "utorrent";
                         }
 
                     }
                     else if (TorrentClient.ToLower().Contains("deluge-console.exe"))
                     {
-                        if (processes.Contains("deluged"))
+                        if (Tools.FillProcessList().Contains("deluged"))
                         {
                             return "deluge";
                         }
@@ -52,18 +51,17 @@ namespace Anime_Downloader.Handlers
                 if (!Torrents.Contains(title + ".torrent") && !done.Contains(title))
                 {
                     //download file and add it to torrent downloader
-                    if (TorrentClient.ToLower().Contains("utorrent") &&
-                        processes.Contains("uTorrent"))
+                    if (TorrentClient.ToLower().Contains("utorrent"))
                     {
-                        if (processes.Contains("uTorrent"))
+                        if (Tools.FillProcessList().Contains("utorrent"))
                         {
-                            return "uTorrent";
+                            return "utorrent";
                         }
 
                     }
                     else if (TorrentClient.ToLower().Contains("deluge-console.exe"))
                     {
-                        if (processes.Contains("deluged"))
+                        if (Tools.FillProcessList().Contains("deluged"))
                         {
                             return "deluge";
                         }
