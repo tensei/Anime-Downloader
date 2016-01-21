@@ -91,7 +91,7 @@ namespace Anime_Downloader
         private void button_Click(object sender, RoutedEventArgs e)
         {
             Tools.Savelist();
-            notifyIcon.Dispose();
+            Tools.notifyIcon.Dispose();
             Close();
         }
 
