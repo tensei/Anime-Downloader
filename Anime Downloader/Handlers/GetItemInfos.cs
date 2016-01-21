@@ -1,25 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Media;
-using Color = System.Drawing.Color;
+﻿using System.Collections.Generic;
+using Anime_Downloader.ViewModels;
 
 namespace Anime_Downloader.Handlers
 {
-    class GetItemInfos
+    public class GetItemInfos
     {
-        public List<string> ConverttostringList(List<object> items)
+        public static List<string> ConverttostringList(List<object> items)
         {
-            List<string> itemlist = new List<string>();
+            var itemlist = new List<string>();
 
-            foreach (var listBoxItem in items)
+            foreach (AnimeViewModel animeViewModel in items)
             {
-                var item = ((ListBoxItem) listBoxItem).Content + "[]" + ((ListBoxItem) listBoxItem).Tag;
-                if (((ListBoxItem) listBoxItem).Foreground !=
-                    new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 140, 140, 140)))
+                var item = animeViewModel.Name + "[]" + animeViewModel.Tag + "[]" + animeViewModel.Added;
+                if (animeViewModel.Status != "Watched")
                 {
                     itemlist.Add(item);
                 }

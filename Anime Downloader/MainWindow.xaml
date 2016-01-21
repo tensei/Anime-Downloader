@@ -5,123 +5,101 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Anime_Downloader"
         xmlns:p="clr-namespace:Anime_Downloader.Properties"
+        xmlns:anime="clr-namespace:Anime_Downloader"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Anime Downloader" Height="350" Width="525" WindowStyle="None"
-        WindowStartupLocation="Manual"  ResizeMode="CanResizeWithGrip" AllowsTransparency="True" MinWidth="525" MinHeight="350">
-    <Grid Background="#FF4D4D4D" MouseDown="Grid_MouseDown">
+        Title="Anime Downloader" Height="230" Width="350" WindowStyle="None"
+        WindowStartupLocation="Manual"  ResizeMode="CanResizeWithGrip" AllowsTransparency="True" MinWidth="525" MinHeight="350"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+        d:DataContext="{d:DesignInstance anime:MainWindowViewModel, IsDesignTimeCreatable=False}"
+        >
 
-        <Label x:Name="label" Content="Anime Downloader" Margin="10,-1,0,0" VerticalAlignment="Top" Foreground="#FFB6B6B6"
-		       HorizontalAlignment="Left" />
-        <StackPanel Margin="0" Width="179" Orientation="Horizontal" FlowDirection="RightToLeft"
-		            HorizontalAlignment="Right" VerticalAlignment="Top">
-            <Button x:Name="CloseBtn" Content="X" HorizontalAlignment="Right" Width="25" BorderThickness="0" Margin="0"
-			        Background="#FF343434" Foreground="#FFB6B6B6" Click="button_Click" Padding="0" Height="25" VerticalAlignment="Top"/>
-            <Button x:Name="MiniBtn" Content="_" Width="25" BorderThickness="0" Margin="0" Background="#FF343434"
-			        Foreground="#FFB6B6B6" Padding="0" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right"
-			        Click="MiniBtn_Click" />
-            <Button x:Name="SettingBtn" Content="S" Width="25" BorderThickness="0" Margin="0" Background="#FF343434"
-			        Foreground="#FFB6B6B6" Padding="0" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right"
-			        Click="SettingBtn_Click" />
-            <Button x:Name="RSSBtn" Content="RSS" Width="25" BorderThickness="0" Margin="5,0,0,0" Background="#FF343434"
-            	Foreground="#FFB6B6B6" Padding="0" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Click="RSSBtn_Click" />
+    <materialDesign:DialogHost>
+        <Grid Background="#FF111111" MouseDown="Grid_MouseDown">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="392*"/>
+                <RowDefinition Height="25"/>
+            </Grid.RowDefinitions>
 
-        </StackPanel>
-        <Label x:Name="label2" Content="Torrent program Path" HorizontalAlignment="Left" Margin="10,36,0,0"
-		       VerticalAlignment="Top" Foreground="#FFB6B6B6" />
-        <Label x:Name="label4" Content="Folder for .torrent files" HorizontalAlignment="Left" Margin="10,96,0,0"
-		       VerticalAlignment="Top" Foreground="#FFB6B6B6" Height="25" />
-        <Label x:Name="label3" Content="OnGoing folder" HorizontalAlignment="Left" Margin="10,65,0,0" VerticalAlignment="Top"
-		       Foreground="#FFB6B6B6" />
-        <TextBox x:Name="TorrentClientTextBox" IsReadOnly="True" Height="23" Margin="140,38,10,0" TextWrapping="Wrap"
-		         VerticalAlignment="Top" Background="#FFB6B6B6" Padding="0,2,0,0" ToolTip="uTorrent or Deluge" MouseDoubleClick="TorrentClientTextBox_MouseDoubleClick" />
-        <TextBox x:Name="OnGoingFolderTextBox" IsReadOnly="True" Height="23" Margin="140,67,10,0" TextWrapping="Wrap"
-		         VerticalAlignment="Top" Background="#FFB6B6B6" Padding="0,2,0,0" MouseDoubleClick="OnGoingFolderTextBox_MouseDoubleClick" />
-        <TextBox x:Name="TorrentFilesTextBox" IsReadOnly="True" Height="23" Margin="140,96,10,0" TextWrapping="Wrap"
-		         VerticalAlignment="Top" Background="#FFB6B6B6" Padding="0,2,0,0" MouseDoubleClick="TorrentFilesTextBox_MouseDoubleClick" />
-        <Label x:Name="label6" Content="Refresh time" HorizontalAlignment="Left" Margin="10,156,0,0" VerticalAlignment="Top"
-		       Foreground="#FFB6B6B6" Height="25" />
-        <TextBox x:Name="RefreshTimebox" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Left" Height="23"
-		         Margin="140,158,0,0" VerticalAlignment="Top" Width="56" Background="#FFB6B6B6" Padding="0,2,0,0" />
-        <Label x:Name="label5" Content="seconds." HorizontalAlignment="Left" Margin="201,156,0,0" VerticalAlignment="Top"
-		       Foreground="#FFB6B6B6" Height="25" />
-        <TextBox x:Name="DebugTextbox" Height="23" Margin="10,0,10,31" TextWrapping="Wrap"
-        	VerticalAlignment="Bottom" Background="#FFB6B6B6" Padding="0,2,0,0" AcceptsReturn="True" AcceptsTab="True" Visibility="Collapsed" />
-        <Label x:Name="label6_Copy" Content="Groups" HorizontalAlignment="Left" Margin="10,186,0,0" VerticalAlignment="Top"
-        	Foreground="#FFB6B6B6" Height="25" />
-        <TextBox x:Name="GroupsTextBox" Height="23" Margin="140,188,10,0" TextWrapping="Wrap"
-        	VerticalAlignment="Top" Background="#FFB6B6B6" Padding="0,2,0,0" />
-        <Label x:Name="label6_Copy1" Content="Resolution" HorizontalAlignment="Left" Margin="10,216,0,0" VerticalAlignment="Top"
-        	Foreground="#FFB6B6B6" Height="25" />
-        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="140,219,0,0" VerticalAlignment="Top" Width="120" Background="#FFB6B6B6" IsReadOnly="True" BorderThickness="0" VerticalContentAlignment="Center">
-            <ComboBoxItem Content="480p" BorderThickness="0" Background="#FFB6B6B6" HorizontalContentAlignment="Center"/>
-            <ComboBoxItem Content="720p" BorderThickness="0" Background="#FFB6B6B6" HorizontalContentAlignment="Center"/>
-            <ComboBoxItem Content="1080p" BorderThickness="0" Background="#FFB6B6B6" HorizontalContentAlignment="Center"/>
-        </ComboBox>
-        <Button x:Name="SaveAllBtn" Content="Save" BorderThickness="0" Margin="10,295,10,0" Background="#FF343434"
-        	Foreground="#FFB6B6B6" Padding="0" Height="25" VerticalAlignment="Top" Click="SaveAllBtn_Click" />
-
-        <ComboBox x:Name="RSSFeedbox" Height="23" Margin="140,268,10,0"
-        	VerticalAlignment="Top" Background="#FFB6B6B6" Padding="0,2,0,0" IsReadOnly="True" >
-            <ComboBoxItem Content="http://www.nyaa.se/?page=rss&amp;cats=1_37&amp;filter=2" ToolTip="Trusted only" Background="{x:Null}"/>
-            <ComboBoxItem Content="http://www.nyaa.se/?page=rss&amp;cats=1_37" ToolTip="All"/>
-        </ComboBox>
-        <Label x:Name="label6_Copy2" Content="RSS Feed" HorizontalAlignment="Left" Margin="10,266,0,0" VerticalAlignment="Top"
-        	Foreground="#FFB6B6B6" Height="25" />
-
-        <ListBox x:Name="listBox" Margin="1,56,1,25" MouseDoubleClick="listBox_MouseDoubleClick" BorderThickness="0" MouseRightButtonUp="listBox_MouseRightButtonUp" >
-            <ListBox.ContextMenu>
-                <ContextMenu Margin="-40,0,0,0">
-
-                </ContextMenu>
-            </ListBox.ContextMenu>
-            <!--<ListBox.ItemContainerStyle>
-                <Style TargetType="ListBoxItem">
-                    <Style.Triggers>
-                        <Trigger Property="IsSelected" Value="True" >
-                            <Setter Property="FontWeight" Value="Bold" />
-                            <Setter Property="Foreground" Value="Black" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </ListBox.ItemContainerStyle>-->
-
-            <!--<ListBoxItem Content="Downloaded" IsEnabled="False" Tag="blank" />
-            <Separator IsEnabled="False" Tag="blank" />-->
-        </ListBox>
-        <ListBox x:Name="listBox1" Margin="1,25,1,292" BorderThickness="0" VerticalAlignment="Top" Height="31" >
-            <ListBoxItem Content="Downloaded" IsEnabled="False" Tag="blank" />
-            <Separator IsEnabled="False" Tag="blank" />
-        </ListBox>
-        <Label x:Name="CounterLabel" Content="{Binding Source={x:Static p:Settings.Default}, Path=RefreshCounter}" Foreground="#FFB6B6B6" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,26,0" />
-        <Label x:Name="status" Content="{Binding Source={x:Static p:Settings.Default}, Path=StatusLabel}"
-		       Foreground="#FFB6B6B6" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,0,0,0" />
-        <StackPanel x:Name="Rssfeedpanel" Margin="0,25,0,0" Background="#FF4D4D4D" Orientation="Horizontal" VerticalAlignment="Top" Visibility="Collapsed">
-            <Label x:Name="label1" Content="Filter" Margin="3,0,0,0" Foreground="#FFB6B6B6" Height="25" VerticalAlignment="Top"/>
-            <ComboBox x:Name="FilterComboBox" Text="" Width="120" VerticalContentAlignment="Center" IsReadOnly="True" SelectionChanged="textBox_SelectionChanged" BorderThickness="0" VerticalAlignment="Top" Height="25">
-                <ComboBoxItem Content="Show all"/>
-                <ComboBoxItem Content="Filter remakes"/>
-                <ComboBoxItem Content="Trusted only"/>
-                <ComboBoxItem Content="A+ only"/>
-            </ComboBox>
-            <Button x:Name="Refreshbtn" Content="Refresh" Width="45" Click="Refreshbtn_Click" BorderThickness="0" Background="#FF343434" Foreground="#FFB6B6B6" Margin="1,0,0,0" VerticalAlignment="Top" Height="25"></Button>
-        </StackPanel>
-        <StackPanel x:Name="CloseStackPanel" Orientation="Horizontal" FlowDirection="RightToLeft" HorizontalAlignment="Right" Width="318" Margin="0,25,0,0" Height="25" VerticalAlignment="Top" Visibility="Collapsed">
-            <Button x:Name="button" Content="Search" Width="93" Click="button_Click_1" BorderThickness="0" Background="#FF343434" Foreground="#FFB6B6B6" Height="25" VerticalAlignment="Top"/>
-            <TextBox x:Name="searchbox" TextWrapping="Wrap" Width="173" VerticalContentAlignment="Center" Margin="1,0,0,0" BorderThickness="0" Foreground="#FFB6B6B6" Background="#FF343434" VerticalAlignment="Top" Height="25" FlowDirection="LeftToRight" GotFocus="searchbox_GotFocus" Text="Search..." LostFocus="searchbox_LostFocus"/>
-        </StackPanel>
-        <ListBox x:Name="FeeditemBox" BorderBrush="Black" BorderThickness="0,1,0,0" MouseDoubleClick="FeeditemBox_MouseDoubleClick" VerticalAlignment="Stretch" Margin="0,50,0,25" Visibility="Collapsed"/>
-
-        <StackPanel x:Name="Savepanel" HorizontalAlignment="Center" Height="105"  VerticalAlignment="Center" Width="400" Background="#FF4D4D4D" Visibility="Collapsed">
-            <StackPanel Height="25" Orientation="Horizontal" VerticalAlignment="Top" Margin="0,2,2,0">
-                <Button x:Name="ClosefeedpanelBtn_Copy" Content="X" HorizontalAlignment="Right" Width="25" BorderThickness="0" Margin="2,0,0,0"
-            		    Background="#FF343434" Foreground="#FFB6B6B6" Padding="0" Click="ClosefeedpanelBtn_Copy_Click"/>
-                <TextBox x:Name="Filenamelabel" Text="Filename" Foreground="#FFB6B6B6" Margin="1,0,0,0" FlowDirection="LeftToRight" Padding="3,5" FontSize="9.333" Background="#FF2C2C2C" BorderThickness="0" AutoWordSelection="True" IsReadOnly="True" MaxHeight="25" MaxLines="1" Width="369"/>
+            <Label Grid.Row="0" x:Name="label" Content="Anime Downloader" VerticalAlignment="Center" HorizontalAlignment="Left" />
+            <StackPanel Grid.Row="0" Orientation="Horizontal" FlowDirection="RightToLeft" VerticalAlignment="Top" HorizontalAlignment="Right" >
+                <Button BorderThickness="0" Background="Transparent" x:Name="CloseBtn" Content="X" HorizontalAlignment="Right" Click="button_Click" Foreground="White" />
+                <Button BorderThickness="0" Background="Transparent" x:Name="MiniBtn" Content="_" Click="MiniBtn_Click" Foreground="White" />
+                <Button BorderThickness="0" Background="Transparent" x:Name="SettingBtn" Content="S" Click="SettingBtn_Click" Foreground="White" />
+                <Button BorderThickness="0" Background="Transparent" x:Name="RSSBtn" Content="RSS" Click="RSSBtn_Click" Foreground="White" />
             </StackPanel>
-            <Label x:Name="folderlbl" Content="Folderpath" Foreground="#FFB6B6B6" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3,0,0,0"/>
-            <TextBox x:Name="Folderbox" Height="25" TextWrapping="Wrap" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderThickness="0,1" Margin="2,0" MouseDoubleClick="Folderbox_MouseDoubleClick"/>
-            <Button x:Name="DownloadBtn" Content="Download" BorderThickness="0" Margin="2,1,2,0"
-            	Background="#FF343434" Foreground="#FFB6B6B6" Padding="0" Height="25" Click="DownloadBtn_Click"/>
-        </StackPanel>
 
-    </Grid>
+
+            <DataGrid x:FieldModifier="public" x:Name="DataGridAnime" AutoGenerateColumns="False"  MouseDoubleClick="DataGridMangas_MouseDoubleClick" IsReadOnly="True" SelectionMode="Single" MouseRightButtonDown="DataGridMangas_MouseDown" Background="#FF1B1B1B" Margin="0" Grid.Row="1" GridLinesVisibility="Vertical" >
+                <DataGrid.ContextMenu>
+                    <ContextMenu Background="#FF1B1B1B"/>
+                </DataGrid.ContextMenu>
+                <DataGrid.Columns>
+                    <materialDesign:MaterialDataGridTextColumn Header="Name" Width="280" Binding="{Binding Name}"/>
+                    <materialDesign:MaterialDataGridTextColumn Header="Status" Binding="{Binding Status}" />
+                    <materialDesign:MaterialDataGridTextColumn Header="Added" Binding="{Binding Added}" />
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid x:Name="DataGridRss" AutoGenerateColumns="False"  MouseDoubleClick="DataGridRss_MouseDoubleClick" IsReadOnly="True" SelectionMode="Single" Background="#FF1B1B1B" Margin="0,35,0,0" Visibility="Collapsed" Grid.Row="1" GridLinesVisibility="Vertical" >
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Color}" Value="remake">
+                                <Setter Property="Background" Value="#FFF0B080"></Setter>
+                                <!--255, 240, 176, 128-->
+                                <Setter Property="Foreground" Value="Black"></Setter>
+                                <!--255, 240, 176, 128-->
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Color}" Value="a+ - trusted">
+                                <Setter Property="Background" Value="#FF60B0F0"></Setter>
+                                <!--255, 96, 176, 240-->
+                                <Setter Property="Foreground" Value="Black"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Color}" Value="trusted">
+                                <Setter Property="Background" Value="#FF98D9A8"></Setter>
+                                <!--255, 152, 217, 168-->
+                                <Setter Property="Foreground" Value="Black"></Setter>
+                                <!--255, 152, 217, 168-->
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Color}" Value="normal">
+                                <Setter Property="Background" Value="#FF1B1B1B"></Setter>
+                                <!--255, 152, 217, 168-->
+                                <Setter Property="Foreground" Value="White"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
+
+
+                <DataGrid.Columns>
+                    <materialDesign:MaterialDataGridTextColumn Header="Name" Width="390" Binding="{Binding Name}"/>
+                    <materialDesign:MaterialDataGridTextColumn Header="Size" Binding="{Binding Size}" />
+                    <materialDesign:MaterialDataGridTextColumn Header="SE" Binding="{Binding Seeder}" />
+                    <materialDesign:MaterialDataGridTextColumn Header="LE" Binding="{Binding Leecher}" />
+                    <materialDesign:MaterialDataGridTextColumn Header="DLs" Binding="{Binding Downloads}" />
+                </DataGrid.Columns>
+            </DataGrid>
+            <Label x:Name="CounterLabel" Content="{Binding Source={x:Static p:Settings.Default}, Path=RefreshCounter}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,26,0" Grid.Row="2" />
+            <Label x:Name="status" Content="{Binding Source={x:Static p:Settings.Default}, Path=StatusLabel}"
+		       VerticalAlignment="Bottom" HorizontalAlignment="Left" Grid.Row="2"/>
+            <StackPanel x:Name="Rssfeedpanel" Background="#FF4D4D4D" Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="1" Height="35" Visibility="Collapsed">
+                <Label x:Name="label1" Content="Filter" Margin="3,0,0,0" Foreground="#FFB6B6B6" VerticalAlignment="Center" />
+                <ComboBox x:Name="FilterComboBox" Text="" Width="120" VerticalContentAlignment="Center" IsReadOnly="True" SelectionChanged="textBox_SelectionChanged" VerticalAlignment="Center">
+                    <ComboBoxItem Content="Show all"/>
+                    <ComboBoxItem Content="Filter remakes"/>
+                    <ComboBoxItem Content="Trusted only"/>
+                    <ComboBoxItem Content="A+ only"/>
+                </ComboBox>
+                <Button x:Name="Refreshbtn" Content="Refresh" Click="Refreshbtn_Click" VerticalAlignment="Center" Margin="5,0,0,0" />
+            </StackPanel>
+            <StackPanel x:Name="CloseStackPanel" Orientation="Horizontal" FlowDirection="RightToLeft" HorizontalAlignment="Right" Height="35" VerticalAlignment="Top" Grid.Row="1" Visibility="Collapsed">
+                <Button x:Name="button" Content="Search" Click="button_Click_1" VerticalAlignment="Center"/>
+                <TextBox x:Name="searchbox" TextWrapping="Wrap" materialDesign:TextFieldAssist.Hint="Search..." Width="133" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+            </StackPanel>
+        </Grid>
+    </materialDesign:DialogHost>
 </Window>

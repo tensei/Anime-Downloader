@@ -13,9 +13,9 @@ namespace Anime_Downloader.Handlers
 {
     public class CheckTitleHandler
     {
-        public List<string> done = new List<string>();
+        public static List<string> done = new List<string>();
 
-        public string CheckTitle(string title, string filename, string TorrentFiles, string TorrentClient, string res,
+        public static string CheckTitle(string title, string filename, string TorrentFiles, string TorrentClient, string res,
             List<string> processes, List<string> groups, List<string> last )
         {
             var Torrents = new List<string>(Directory.EnumerateFiles(TorrentFiles));
