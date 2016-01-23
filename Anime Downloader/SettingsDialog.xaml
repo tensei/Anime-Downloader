@@ -1,55 +1,65 @@
 ﻿<UserControl x:Class="Anime_Downloader.SettingsDialog"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Anime_Downloader"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
 
     <Grid>
         <Label x:Name="label2" Content="Torrent program Path" Margin="10,11,160,0"
-		       VerticalAlignment="Top"/>
+               VerticalAlignment="Top" />
         <Label x:Name="label4" Content="Folder for .torrent file" Margin="10,74,165,0"
-		       VerticalAlignment="Top" />
-        <Label x:Name="label3" Content="OnGoing folder" HorizontalAlignment="Left" Margin="10,45,0,0" VerticalAlignment="Top"
-		        />
-        <TextBox x:Name="TorrentClientTextBox" IsReadOnly="True"  Margin="145,8,5,0" TextWrapping="Wrap"
-		         VerticalAlignment="Top"  Padding="0,2,0,0" ToolTip="uTorrent or Deluge" MouseDoubleClick="TorrentClientTextBox_MouseDoubleClick" />
-        <TextBox x:Name="OnGoingFolderTextBox" IsReadOnly="True"  Margin="140,42,10,0" TextWrapping="Wrap"
-		         VerticalAlignment="Top"  Padding="0,2,0,0" MouseDoubleClick="OnGoingFolderTextBox_MouseDoubleClick" />
-        <TextBox x:Name="TorrentFilesTextBox" IsReadOnly="True"  Margin="140,71,10,0" TextWrapping="Wrap"
-		         VerticalAlignment="Top"  Padding="0,2,0,0" MouseDoubleClick="TorrentFilesTextBox_MouseDoubleClick" />
-        <Label x:Name="label6" Content="Refresh time" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top"
-		         />
-        <TextBox x:Name="RefreshTimebox" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Left" 
-		         Margin="140,111,0,0" VerticalAlignment="Top" Width="56"/>
-        <Label x:Name="label5" Content="seconds." HorizontalAlignment="Left" Margin="201,109,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="DebugTextbox"  Margin="10,0,10,31" TextWrapping="Wrap"
-        	VerticalAlignment="Bottom"  Visibility="Collapsed" />
-        <Label x:Name="label6_Copy" Content="Groups" HorizontalAlignment="Left" Margin="10,144,0,0" VerticalAlignment="Top"
-        	  />
-        <TextBox x:Name="GroupsTextBox"  Margin="140,141,10,0" TextWrapping="Wrap"
-        	VerticalAlignment="Top"  Padding="0,2,0,0" />
-        <Label x:Name="label6_Copy1" Content="Resolution" HorizontalAlignment="Left" Margin="10,174,0,0" VerticalAlignment="Top"
-        	  />
-        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="140,175,0,100" IsReadOnly="True" VerticalContentAlignment="Center" Width="150">
+               VerticalAlignment="Top" />
+        <Label x:Name="label3" Content="OnGoing folder" HorizontalAlignment="Left" Margin="10,45,0,0"
+               VerticalAlignment="Top" />
+        <TextBox x:Name="TorrentClientTextBox" IsReadOnly="True" Margin="145,8,5,0" TextWrapping="Wrap"
+                 VerticalAlignment="Top" Padding="0,2,0,0" ToolTip="uTorrent or Deluge"
+                 MouseDoubleClick="TorrentClientTextBox_MouseDoubleClick" />
+        <TextBox x:Name="OnGoingFolderTextBox" IsReadOnly="True" Margin="140,42,10,0" TextWrapping="Wrap"
+                 VerticalAlignment="Top" Padding="0,2,0,0" MouseDoubleClick="OnGoingFolderTextBox_MouseDoubleClick" />
+        <TextBox x:Name="TorrentFilesTextBox" IsReadOnly="True" Margin="140,71,10,0" TextWrapping="Wrap"
+                 VerticalAlignment="Top" Padding="0,2,0,0" MouseDoubleClick="TorrentFilesTextBox_MouseDoubleClick" />
+        <Label x:Name="label6" Content="Refresh time" HorizontalAlignment="Left" Margin="10,110,0,0"
+               VerticalAlignment="Top" />
+        <TextBox x:Name="RefreshTimebox" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Left"
+                 Margin="140,111,0,0" VerticalAlignment="Top" Width="56" />
+        <Label x:Name="label5" Content="seconds." HorizontalAlignment="Left" Margin="201,109,0,0"
+               VerticalAlignment="Top" />
+        <TextBox x:Name="DebugTextbox" Margin="10,0,10,31" TextWrapping="Wrap"
+                 VerticalAlignment="Bottom" Visibility="Collapsed" />
+        <Label x:Name="label6_Copy" Content="Groups" HorizontalAlignment="Left" Margin="10,144,0,0"
+               VerticalAlignment="Top" />
+        <TextBox x:Name="GroupsTextBox" Margin="140,141,10,0" TextWrapping="Wrap"
+                 VerticalAlignment="Top" Padding="0,2,0,0" />
+        <Label x:Name="label6_Copy1" Content="Resolution" HorizontalAlignment="Left" Margin="10,174,0,0"
+               VerticalAlignment="Top" />
+        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="140,175,0,100" IsReadOnly="True"
+                  VerticalContentAlignment="Center" Width="150">
             <ComboBoxItem Content="480p" />
             <ComboBoxItem Content="720p" />
-            <ComboBoxItem Content="1080p"/>
+            <ComboBoxItem Content="1080p" />
         </ComboBox>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,244,10,15">
-            <Button x:Name="SaveAllBtn" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Style="{DynamicResource MaterialDesignFlatButton}" Click="SaveAllBtn_Click" >SAVE</Button>
-            <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Style="{DynamicResource MaterialDesignFlatButton}">CANCEL</Button>
+            <Button x:Name="SaveAllBtn" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                    Style="{DynamicResource MaterialDesignFlatButton}" Click="SaveAllBtn_Click">
+                SAVE
+            </Button>
+            <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                    Style="{DynamicResource MaterialDesignFlatButton}">
+                CANCEL
+            </Button>
         </StackPanel>
-        <ComboBox x:Name="RSSFeedbox"  Margin="140,209,10,0"
-        	VerticalAlignment="Top"  Padding="0,2,0,0" IsReadOnly="True" >
-            <ComboBoxItem Content="http://www.nyaa.se/?page=rss&amp;cats=1_37&amp;filter=2" ToolTip="Trusted only" Background="{x:Null}"/>
-            <ComboBoxItem Content="http://www.nyaa.se/?page=rss&amp;cats=1_37" ToolTip="All"/>
+        <ComboBox x:Name="RSSFeedbox" Margin="140,209,10,0"
+                  VerticalAlignment="Top" Padding="0,2,0,0" IsReadOnly="True">
+            <ComboBoxItem Content="http://www.nyaa.se/?page=rss&amp;cats=1_37&amp;filter=2" ToolTip="Trusted only"
+                          Background="{x:Null}" />
+            <ComboBoxItem Content="http://www.nyaa.se/?page=rss&amp;cats=1_37" ToolTip="All" />
         </ComboBox>
-        <Label x:Name="label6_Copy2" Content="RSS Feed" HorizontalAlignment="Left" Margin="10,201,0,0" VerticalAlignment="Top"
-        	  />
+        <Label x:Name="label6_Copy2" Content="RSS Feed" HorizontalAlignment="Left" Margin="10,201,0,0"
+               VerticalAlignment="Top" />
     </Grid>
 </UserControl>

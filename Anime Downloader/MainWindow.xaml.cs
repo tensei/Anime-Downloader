@@ -27,13 +27,13 @@ namespace Anime_Downloader
         private readonly ConfigFileHandler c = new ConfigFileHandler();
         private readonly DoubleClickHandler doubleClick = new DoubleClickHandler();
         private readonly string Filepath = "AnimeDownloader.json";
-        public readonly NotifyIcon notifyIcon = new NotifyIcon();
-        public readonly DispatcherTimer Timer = new DispatcherTimer();
         private readonly JObject jsonFile;
+        public readonly NotifyIcon notifyIcon = new NotifyIcon();
+        private readonly string Rssfeed = "http://www.nyaa.se/?page=rss&cats=1_37";
+        public readonly DispatcherTimer Timer = new DispatcherTimer();
         public List<object> LstItems = new List<object>();
         public string OngoingFolder;
         public string Res;
-        private readonly string Rssfeed = "http://www.nyaa.se/?page=rss&cats=1_37";
         public string TorrentClient;
         public string TorrentFiles;
         //private JObject jsonFile;
@@ -60,19 +60,7 @@ namespace Anime_Downloader
             Global.Res = jsonFile["Resolution"].ToString();
             Settings.Default.StatusLabel = "Status: Setting things up...";
             //DataGridAnime.ItemsSource = Global.Anime;
-            Timer.Tick += Datagrid;
-            Timer.Interval = TimeSpan.FromSeconds(1d);
-            Timer.Start();
             Tools.SetupNotifyIcon();
-        }
-
-        private void Datagrid(object sender, EventArgs e)
-        {
-            foreach (var animeViewModel in Global.Anime)
-            {
-                if (!DataGridAnime.Items.Contains(animeViewModel))
-                    DataGridAnime.Items.Insert(0, animeViewModel);
-            }
         }
 
         //move window func

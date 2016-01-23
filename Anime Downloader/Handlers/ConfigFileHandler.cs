@@ -13,7 +13,6 @@ namespace Anime_Downloader
             if (!File.Exists(path))
             {
                 CreateFile();
-
             }
         }
 

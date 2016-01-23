@@ -1,10 +1,9 @@
 ﻿using System.Diagnostics;
-using System.Windows.Controls;
 using Anime_Downloader.ViewModels;
 
 namespace Anime_Downloader.Handlers
 {
-    class DoubleClickHandler
+    internal class DoubleClickHandler
     {
         public bool Open(AnimeViewModel item)
         {

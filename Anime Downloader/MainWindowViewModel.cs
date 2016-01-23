@@ -15,10 +15,8 @@ namespace Anime_Downloader
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        private readonly ObservableCollection<AnimeViewModel> _animessInternal =
+        public static ObservableCollection<AnimeViewModel> _animeInternal =
             new ObservableCollection<AnimeViewModel>();
-
-        private readonly string Filepath = "AnimeDownloader.json";
 
 
         //private string _currentSite;
@@ -27,9 +25,11 @@ namespace Anime_Downloader
         private readonly ThreadStart Childref;
         private readonly Thread ChildThread;
 
+        private readonly string Filepath = "AnimeDownloader.json";
+        private JObject _jsonFile;
+
         public List<string> done = new List<string>();
         public List<string> groups = new List<string>();
-        private JObject jsonFile;
         public List<string> last = new List<string>();
 
 
@@ -40,11 +40,11 @@ namespace Anime_Downloader
 
         public MainWindowViewModel()
         {
-            Animes = new ReadOnlyObservableCollection<AnimeViewModel>(_animessInternal);
+            Animes = new ReadOnlyObservableCollection<AnimeViewModel>(_animeInternal);
             Tools.PopulateListbox();
             RefreshCommand = new ActionCommand(changeitem);
 
-            jsonFile = JObject.Parse(File.ReadAllText(Filepath));
+            _jsonFile = JObject.Parse(File.ReadAllText(Filepath));
             Childref = MainThread.CheckNow;
             ChildThread = new Thread(Childref) {IsBackground = true};
             ChildThread.Start();
@@ -59,7 +59,7 @@ namespace Anime_Downloader
 
         private void changeitem()
         {
-            foreach (var x in _animessInternal)
+            foreach (var x in _animeInternal)
             {
                 MessageBox.Show(x.Name);
             }

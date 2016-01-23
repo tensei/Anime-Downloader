@@ -9,66 +9,77 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="Anime Downloader" Height="230" Width="350" WindowStyle="None"
-        WindowStartupLocation="Manual"  ResizeMode="CanResizeWithGrip" AllowsTransparency="True" MinWidth="525" MinHeight="350"
+        WindowStartupLocation="Manual" ResizeMode="CanResizeWithGrip" AllowsTransparency="True" MinWidth="525"
+        MinHeight="350"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-        d:DataContext="{d:DesignInstance anime:MainWindowViewModel, IsDesignTimeCreatable=False}"
-        >
+        d:DataContext="{d:DesignInstance anime:MainWindowViewModel, IsDesignTimeCreatable=False}">
 
     <materialDesign:DialogHost>
         <Grid Background="#FF111111" MouseDown="Grid_MouseDown">
             <Grid.RowDefinitions>
-                <RowDefinition Height="35"/>
-                <RowDefinition Height="392*"/>
-                <RowDefinition Height="25"/>
+                <RowDefinition Height="35" />
+                <RowDefinition Height="392*" />
+                <RowDefinition Height="25" />
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" x:Name="label" Content="Anime Downloader" VerticalAlignment="Center" HorizontalAlignment="Left" />
-            <StackPanel Grid.Row="0" Orientation="Horizontal" FlowDirection="RightToLeft" VerticalAlignment="Top" HorizontalAlignment="Right" >
-                <Button BorderThickness="0" Background="Transparent" x:Name="CloseBtn" Content="X" HorizontalAlignment="Right" Click="button_Click" Foreground="White" />
-                <Button BorderThickness="0" Background="Transparent" x:Name="MiniBtn" Content="_" Click="MiniBtn_Click" Foreground="White" />
-                <Button BorderThickness="0" Background="Transparent" x:Name="SettingBtn" Content="S" Click="SettingBtn_Click" Foreground="White" />
-                <Button BorderThickness="0" Background="Transparent" x:Name="RSSBtn" Content="RSS" Click="RSSBtn_Click" Foreground="White" />
+            <Label Grid.Row="0" x:Name="label" Content="Anime Downloader" VerticalAlignment="Center"
+                   HorizontalAlignment="Left" />
+            <StackPanel Grid.Row="0" Orientation="Horizontal" FlowDirection="RightToLeft" VerticalAlignment="Top"
+                        HorizontalAlignment="Right">
+                <Button BorderThickness="0" Background="Transparent" x:Name="CloseBtn" Content="X"
+                        HorizontalAlignment="Right" Click="button_Click" Foreground="White" />
+                <Button BorderThickness="0" Background="Transparent" x:Name="MiniBtn" Content="_" Click="MiniBtn_Click"
+                        Foreground="White" />
+                <Button BorderThickness="0" Background="Transparent" x:Name="SettingBtn" Content="S"
+                        Click="SettingBtn_Click" Foreground="White" />
+                <Button BorderThickness="0" Background="Transparent" x:Name="RSSBtn" Content="RSS" Click="RSSBtn_Click"
+                        Foreground="White" />
             </StackPanel>
 
 
-            <DataGrid x:FieldModifier="public" x:Name="DataGridAnime" AutoGenerateColumns="False"  MouseDoubleClick="DataGridMangas_MouseDoubleClick" IsReadOnly="True" SelectionMode="Single" MouseRightButtonDown="DataGridMangas_MouseDown" Background="#FF1B1B1B" Margin="0" Grid.Row="1" GridLinesVisibility="Vertical" >
+            <DataGrid x:FieldModifier="public" ItemsSource="{Binding Animes}" x:Name="DataGridAnime"
+                      AutoGenerateColumns="False" MouseDoubleClick="DataGridMangas_MouseDoubleClick" IsReadOnly="True"
+                      SelectionMode="Single" MouseRightButtonDown="DataGridMangas_MouseDown" Background="#FF1B1B1B"
+                      Margin="0" Grid.Row="1" GridLinesVisibility="Vertical">
                 <DataGrid.ContextMenu>
-                    <ContextMenu Background="#FF1B1B1B"/>
+                    <ContextMenu Background="#FF1B1B1B" />
                 </DataGrid.ContextMenu>
                 <DataGrid.Columns>
-                    <materialDesign:MaterialDataGridTextColumn Header="Name" Width="280" Binding="{Binding Name}"/>
+                    <materialDesign:MaterialDataGridTextColumn Header="Name" Width="270" Binding="{Binding Name}" />
                     <materialDesign:MaterialDataGridTextColumn Header="Status" Binding="{Binding Status}" />
                     <materialDesign:MaterialDataGridTextColumn Header="Added" Binding="{Binding Added}" />
                 </DataGrid.Columns>
             </DataGrid>
-            <DataGrid x:Name="DataGridRss" AutoGenerateColumns="False"  MouseDoubleClick="DataGridRss_MouseDoubleClick" IsReadOnly="True" SelectionMode="Single" Background="#FF1B1B1B" Margin="0,35,0,0" Visibility="Collapsed" Grid.Row="1" GridLinesVisibility="Vertical" >
+            <DataGrid x:Name="DataGridRss" AutoGenerateColumns="False" MouseDoubleClick="DataGridRss_MouseDoubleClick"
+                      IsReadOnly="True" SelectionMode="Single" Background="#FF1B1B1B" Margin="0,35,0,0"
+                      Visibility="Collapsed" Grid.Row="1" GridLinesVisibility="Vertical">
                 <DataGrid.RowStyle>
                     <Style TargetType="DataGridRow">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Color}" Value="remake">
-                                <Setter Property="Background" Value="#FFF0B080"></Setter>
+                                <Setter Property="Background" Value="#FFF0B080" />
                                 <!--255, 240, 176, 128-->
-                                <Setter Property="Foreground" Value="Black"></Setter>
+                                <Setter Property="Foreground" Value="Black" />
                                 <!--255, 240, 176, 128-->
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Color}" Value="a+ - trusted">
-                                <Setter Property="Background" Value="#FF60B0F0"></Setter>
+                                <Setter Property="Background" Value="#FF60B0F0" />
                                 <!--255, 96, 176, 240-->
-                                <Setter Property="Foreground" Value="Black"></Setter>
+                                <Setter Property="Foreground" Value="Black" />
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Color}" Value="trusted">
-                                <Setter Property="Background" Value="#FF98D9A8"></Setter>
+                                <Setter Property="Background" Value="#FF98D9A8" />
                                 <!--255, 152, 217, 168-->
-                                <Setter Property="Foreground" Value="Black"></Setter>
+                                <Setter Property="Foreground" Value="Black" />
                                 <!--255, 152, 217, 168-->
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Color}" Value="normal">
-                                <Setter Property="Background" Value="#FF1B1B1B"></Setter>
+                                <Setter Property="Background" Value="#FF1B1B1B" />
                                 <!--255, 152, 217, 168-->
-                                <Setter Property="Foreground" Value="White"></Setter>
+                                <Setter Property="Foreground" Value="White" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
@@ -76,29 +87,37 @@
 
 
                 <DataGrid.Columns>
-                    <materialDesign:MaterialDataGridTextColumn Header="Name" Width="390" Binding="{Binding Name}"/>
+                    <materialDesign:MaterialDataGridTextColumn Header="Name" Width="390" Binding="{Binding Name}" />
                     <materialDesign:MaterialDataGridTextColumn Header="Size" Binding="{Binding Size}" />
                     <materialDesign:MaterialDataGridTextColumn Header="SE" Binding="{Binding Seeder}" />
                     <materialDesign:MaterialDataGridTextColumn Header="LE" Binding="{Binding Leecher}" />
                     <materialDesign:MaterialDataGridTextColumn Header="DLs" Binding="{Binding Downloads}" />
                 </DataGrid.Columns>
             </DataGrid>
-            <Label x:Name="CounterLabel" Content="{Binding Source={x:Static p:Settings.Default}, Path=RefreshCounter}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,26,0" Grid.Row="2" />
+            <Label x:Name="CounterLabel" Content="{Binding Source={x:Static p:Settings.Default}, Path=RefreshCounter}"
+                   VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,26,0" Grid.Row="2" />
             <Label x:Name="status" Content="{Binding Source={x:Static p:Settings.Default}, Path=StatusLabel}"
-		       VerticalAlignment="Bottom" HorizontalAlignment="Left" Grid.Row="2"/>
-            <StackPanel x:Name="Rssfeedpanel" Background="#FF4D4D4D" Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="1" Height="35" Visibility="Collapsed">
-                <Label x:Name="label1" Content="Filter" Margin="3,0,0,0" Foreground="#FFB6B6B6" VerticalAlignment="Center" />
-                <ComboBox x:Name="FilterComboBox" Text="" Width="120" VerticalContentAlignment="Center" IsReadOnly="True" SelectionChanged="textBox_SelectionChanged" VerticalAlignment="Center">
-                    <ComboBoxItem Content="Show all"/>
-                    <ComboBoxItem Content="Filter remakes"/>
-                    <ComboBoxItem Content="Trusted only"/>
-                    <ComboBoxItem Content="A+ only"/>
+                   VerticalAlignment="Bottom" HorizontalAlignment="Left" Grid.Row="2" />
+            <StackPanel x:Name="Rssfeedpanel" Background="#FF4D4D4D" Orientation="Horizontal" VerticalAlignment="Top"
+                        Grid.Row="1" Height="35" Visibility="Collapsed">
+                <Label x:Name="label1" Content="Filter" Margin="3,0,0,0" Foreground="#FFB6B6B6"
+                       VerticalAlignment="Center" />
+                <ComboBox x:Name="FilterComboBox" Text="" Width="120" VerticalContentAlignment="Center"
+                          IsReadOnly="True" SelectionChanged="textBox_SelectionChanged" VerticalAlignment="Center">
+                    <ComboBoxItem Content="Show all" />
+                    <ComboBoxItem Content="Filter remakes" />
+                    <ComboBoxItem Content="Trusted only" />
+                    <ComboBoxItem Content="A+ only" />
                 </ComboBox>
-                <Button x:Name="Refreshbtn" Content="Refresh" Click="Refreshbtn_Click" VerticalAlignment="Center" Margin="5,0,0,0" />
+                <Button x:Name="Refreshbtn" Content="Refresh" Click="Refreshbtn_Click" VerticalAlignment="Center"
+                        Margin="5,0,0,0" />
             </StackPanel>
-            <StackPanel x:Name="CloseStackPanel" Orientation="Horizontal" FlowDirection="RightToLeft" HorizontalAlignment="Right" Height="35" VerticalAlignment="Top" Grid.Row="1" Visibility="Collapsed">
-                <Button x:Name="button" Content="Search" Click="button_Click_1" VerticalAlignment="Center"/>
-                <TextBox x:Name="searchbox" TextWrapping="Wrap" materialDesign:TextFieldAssist.Hint="Search..." Width="133" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+            <StackPanel x:Name="CloseStackPanel" Orientation="Horizontal" FlowDirection="RightToLeft"
+                        HorizontalAlignment="Right" Height="35" VerticalAlignment="Top" Grid.Row="1"
+                        Visibility="Collapsed">
+                <Button x:Name="button" Content="Search" Click="button_Click_1" VerticalAlignment="Center" />
+                <TextBox x:Name="searchbox" TextWrapping="Wrap" materialDesign:TextFieldAssist.Hint="Search..."
+                         Width="133" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
             </StackPanel>
         </Grid>
     </materialDesign:DialogHost>

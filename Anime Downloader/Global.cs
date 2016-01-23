@@ -1,25 +1,30 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
+using System.Runtime.CompilerServices;
+using System.Windows;
 using Anime_Downloader.ViewModels;
 using Newtonsoft.Json.Linq;
 
 namespace Anime_Downloader
 {
-    public class Global
+    public class Global : INotifyPropertyChanged
     {
         private const string Filepath = "AnimeDownloader.json";
         private static string _ongoingFolder = "";
         private static string _torrentFiles = "";
         private static string _torrentClient = "";
         private static string _resolution = "";
+        public static List<string> Done = new List<string>();
         public static List<string> Groups = new List<string>();
 
-        private static readonly List<AnimeViewModel> _animeInternal = new List<AnimeViewModel>();
         private static JObject _jsonFile;
 
         public static int _timerInternal = 5;
 
-        public static List<AnimeViewModel> Anime = new List<AnimeViewModel>(_animeInternal);
+        public static ObservableCollection<AnimeViewModel> Anime = MainWindowViewModel._animeInternal;
 
         public static string GroupAdd
         {
@@ -29,12 +34,26 @@ namespace Anime_Downloader
                 Groups.Insert(0, value);
             }
         }
+
+        public static string DoneAdd
+        {
+            set
+            {
+                if (Done.Contains(value)) return;
+                Done.Add(value);
+            }
+        }
+
         public static AnimeViewModel AnimeAdd
         {
             set
             {
-                if (Anime.Contains(value)) return;
-                Anime.Insert(0, value);
+                Application.Current.Dispatcher.BeginInvoke(new Action(delegate
+                {
+                    var a = MainWindowViewModel._animeInternal;
+                    if (a.Contains(value)) return;
+                    a.Insert(0, value);
+                }));
             }
         }
 
@@ -100,6 +119,13 @@ namespace Anime_Downloader
                 if (_jsonFile.Equals(value)) return;
                 _jsonFile = value;
             }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

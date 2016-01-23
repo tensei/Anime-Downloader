@@ -12,11 +12,6 @@ namespace Anime_Downloader.Threads
 {
     public class MainThread
     {
-        public static List<string> Torrents = new List<string>();
-
-        public static List<string> done = new List<string>();
-        public static List<string> last = new List<string>();
-
         public static async void CheckNow()
         {
             while (true)
@@ -41,7 +36,6 @@ namespace Anime_Downloader.Threads
                 {
                     var client = new WebClient();
                     Settings.Default.StatusLabel = "Status: Checking in " + Global.Timer + " seconds.";
-                    Torrents = new List<string>(Directory.EnumerateFiles(Global.TorrentFiles));
                     List<NyaaseRssViewModel> rssitems;
                     try
                     {
@@ -64,7 +58,7 @@ namespace Anime_Downloader.Threads
                                 filename.Replace("Anime Koi", "Anime-Koi");
                                 switch (
                                     CheckTitleHandler.CheckTitle(title, filename, Global.TorrentFiles,
-                                        Global.TorrentClient, Global.Res, Global.Groups, last))
+                                        Global.TorrentClient, Global.Res, Global.Groups))
                                 {
                                     case "utorrent":
                                     {
@@ -77,15 +71,17 @@ namespace Anime_Downloader.Threads
                                         Settings.Default.Listbox.Add(title + "[]" + ongoing[filename] + @"\" +
                                                                      title + "[]" + "true" + "\n");
                                         Settings.Default.Save();
-                                        done.Add(title);
+                                        Global.DoneAdd = title;
                                         Thread.Sleep(300);
                                         break;
                                     }
                                     case "deluge":
                                     {
                                         client.DownloadFile(new Uri(link),
-                                            Global.TorrentFiles + @"\" + title.Replace("'", string.Empty) + @".torrent");
-                                        Deluge.open(ongoing, title, filename, Global.TorrentFiles, Global.OngoingFolder,
+                                            Global.TorrentFiles + @"\" + title.Replace("'", string.Empty) +
+                                            @".torrent");
+                                        Deluge.open(ongoing, title, filename, Global.TorrentFiles,
+                                            Global.OngoingFolder,
                                             Global.TorrentClient);
                                         Tools.CreateDataGridItem(title.Replace("'", string.Empty),
                                             ongoing[filename] + @"\" + title.Replace("'", string.Empty), true);
@@ -93,7 +89,7 @@ namespace Anime_Downloader.Threads
                                         Settings.Default.Listbox.Add(title + "[]" + ongoing[filename] + @"\" +
                                                                      title + "[]" + "true" + "\n");
                                         Settings.Default.Save();
-                                        done.Add(title);
+                                        Global.DoneAdd = title;
                                         Thread.Sleep(300);
                                         break;
                                     }
