@@ -1,7 +1,5 @@
-﻿namespace Anime_Downloader.ViewModels
-{
-    public class NyaaseRssViewModel
-    {
+﻿namespace Anime_Downloader.ViewModels {
+    public class NyaaseRssViewModel {
         public string Name { get; set; }
         public string Size { get; set; }
         public string Seeder { get; set; }

@@ -20,7 +20,7 @@
     <materialDesign:DialogHost>
         <Grid Background="#FF111111" MouseDown="Grid_MouseDown">
             <Grid.RowDefinitions>
-                <RowDefinition Height="35" />
+                <RowDefinition Height="32" />
                 <RowDefinition Height="392*" />
                 <RowDefinition Height="25" />
             </Grid.RowDefinitions>
@@ -37,18 +37,25 @@
                         Click="SettingBtn_Click" Foreground="White" />
                 <Button BorderThickness="0" Background="Transparent" x:Name="RSSBtn" Content="RSS" Click="RSSBtn_Click"
                         Foreground="White" />
+                <Button BorderThickness="0" Background="Transparent" x:Name="DebugBtn" Content="Debug"
+                        Foreground="White" Click="DebugBtn_Click" />
             </StackPanel>
 
 
             <DataGrid x:FieldModifier="public" ItemsSource="{Binding Animes}" x:Name="DataGridAnime"
                       AutoGenerateColumns="False" MouseDoubleClick="DataGridMangas_MouseDoubleClick" IsReadOnly="True"
-                      SelectionMode="Single" MouseRightButtonDown="DataGridMangas_MouseDown" Background="#FF1B1B1B"
-                      Margin="0" Grid.Row="1" GridLinesVisibility="Vertical">
+                      SelectionMode="Single" Background="#FF1B1B1B"
+                      Margin="0" Grid.Row="1" GridLinesVisibility="Vertical"
+                      SelectionChanged="DataGridAnime_OnSelectionChanged">
                 <DataGrid.ContextMenu>
-                    <ContextMenu Background="#FF1B1B1B" />
+                    <ContextMenu Background="#FF1B1B1B">
+                        <MenuItem x:Name="MenuItemHeader" Header="" IsEnabled="False" />
+                        <MenuItem Click="MenuItemWatched_click" Header="Watched" />
+                        <MenuItem Click="MenuItemNotWatched_click" Header="Not Watched" />
+                    </ContextMenu>
                 </DataGrid.ContextMenu>
                 <DataGrid.Columns>
-                    <materialDesign:MaterialDataGridTextColumn Header="Name" Width="270" Binding="{Binding Name}" />
+                    <materialDesign:MaterialDataGridTextColumn Header="Name" Width="260" Binding="{Binding Name}" />
                     <materialDesign:MaterialDataGridTextColumn Header="Status" Binding="{Binding Status}" />
                     <materialDesign:MaterialDataGridTextColumn Header="Added" Binding="{Binding Added}" />
                 </DataGrid.Columns>
@@ -119,6 +126,8 @@
                 <TextBox x:Name="searchbox" TextWrapping="Wrap" materialDesign:TextFieldAssist.Hint="Search..."
                          Width="133" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
             </StackPanel>
+            <TextBox TextWrapping="Wrap" x:Name="DebugTextBox" Grid.Row="1" Background="#FF1B1B1B" IsReadOnly="True"
+                     Text="{Binding Debug, Source={x:Static p:Settings.Default}}" Visibility="Collapsed" />
         </Grid>
     </materialDesign:DialogHost>
 </Window>

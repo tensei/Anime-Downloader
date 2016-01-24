@@ -2,22 +2,17 @@
 using System.IO;
 using Newtonsoft.Json.Linq;
 
-namespace Anime_Downloader
-{
-    internal class ConfigFileHandler
-    {
+namespace Anime_Downloader {
+    internal class ConfigFileHandler {
         private readonly string path = "AnimeDownloader.json";
 
-        public void CheckFile()
-        {
-            if (!File.Exists(path))
-            {
+        public void CheckFile() {
+            if (!File.Exists(path)) {
                 CreateFile();
             }
         }
 
-        private void CreateFile()
-        {
+        private void CreateFile() {
             //if (!Directory.Exists("Settings"))
             //{
             //    Directory.CreateDirectory("Settings");

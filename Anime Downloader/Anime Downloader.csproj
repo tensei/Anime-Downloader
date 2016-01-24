@@ -118,6 +118,7 @@
     <Compile Include="RSS_feeds\nyaase.cs" />
     <Compile Include="Torrent_clients\uTorrent.cs" />
     <Compile Include="Utility\ActionCommand.cs" />
+    <Compile Include="Utility\Debug.cs" />
     <Compile Include="Utility\RssUtility.cs" />
     <Compile Include="Utility\Tools.cs" />
     <Compile Include="ViewModels\AnimeViewModel.cs" />

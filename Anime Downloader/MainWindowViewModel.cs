@@ -11,10 +11,8 @@ using Anime_Downloader.Utility;
 using Anime_Downloader.ViewModels;
 using Newtonsoft.Json.Linq;
 
-namespace Anime_Downloader
-{
-    public class MainWindowViewModel : INotifyPropertyChanged
-    {
+namespace Anime_Downloader {
+    public class MainWindowViewModel : INotifyPropertyChanged {
         public static ObservableCollection<AnimeViewModel> _animeInternal =
             new ObservableCollection<AnimeViewModel>();
 
@@ -38,8 +36,7 @@ namespace Anime_Downloader
 
         public List<string> Torrents = new List<string>();
 
-        public MainWindowViewModel()
-        {
+        public MainWindowViewModel() {
             Animes = new ReadOnlyObservableCollection<AnimeViewModel>(_animeInternal);
             Tools.PopulateListbox();
             RefreshCommand = new ActionCommand(changeitem);
@@ -57,16 +54,13 @@ namespace Anime_Downloader
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void changeitem()
-        {
-            foreach (var x in _animeInternal)
-            {
+        private void changeitem() {
+            foreach (var x in _animeInternal) {
                 MessageBox.Show(x.Name);
             }
         }
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }

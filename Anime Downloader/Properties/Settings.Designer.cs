@@ -109,33 +109,6 @@ namespace Anime_Downloader.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
-            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
-            "tring>dummy</string>\r\n</ArrayOfString>")]
-        public global::System.Collections.Specialized.StringCollection Listbox {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["Listbox"]));
-            }
-            set {
-                this["Listbox"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfAnyType xmlns:xsi=\"http://www.w3" +
-            ".org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" />")]
-        public global::System.Collections.ArrayList ListboxItems {
-            get {
-                return ((global::System.Collections.ArrayList)(this["ListboxItems"]));
-            }
-            set {
-                this["ListboxItems"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string Setting {
             get {
@@ -149,19 +122,48 @@ namespace Anime_Downloader.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string RSS {
+        public string animeitems {
             get {
-                return ((string)(this["RSS"]));
+                return ((string)(this["animeitems"]));
             }
             set {
-                this["RSS"] = value;
+                this["animeitems"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
-            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" />")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\r\n        <?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n        <ArrayOfString xmlns:x" +
+            "si=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001" +
+            "/XMLSchema\">\r\n        <string>dummy</string>\r\n        </ArrayOfString>\r\n      ")]
+        public global::System.Collections.Specialized.StringCollection Listbox {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["Listbox"]));
+            }
+            set {
+                this["Listbox"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\r\n        <?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n        <ArrayOfAnyType xmlns:" +
+            "xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/200" +
+            "1/XMLSchema\" />\r\n      ")]
+        public global::System.Collections.ArrayList ListboxItems {
+            get {
+                return ((global::System.Collections.ArrayList)(this["ListboxItems"]));
+            }
+            set {
+                this["ListboxItems"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\r\n        <?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n        <ArrayOfString xmlns:x" +
+            "si=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001" +
+            "/XMLSchema\" />\r\n      ")]
         public global::System.Collections.Specialized.StringCollection Groups {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["Groups"]));
@@ -173,13 +175,13 @@ namespace Anime_Downloader.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string animeitems {
+        [global::System.Configuration.DefaultSettingValueAttribute("Debug shit")]
+        public string Debug {
             get {
-                return ((string)(this["animeitems"]));
+                return ((string)(this["Debug"]));
             }
             set {
-                this["animeitems"] = value;
+                this["Debug"] = value;
             }
         }
     }
