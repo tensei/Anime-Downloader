@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -77,10 +79,12 @@ namespace Anime_Downloader {
             item.Status = "Not Watched";
         }
 
-        public void FillRSSbox() {
-            if (FilterComboBox.SelectedIndex.Equals(-1)) return;
+        // ReSharper disable once InconsistentNaming
+        private void FillRSSbox() {
+            if(FilterComboBox.SelectedIndex.Equals(-1)) return;
             var selected = (ComboBoxItem) FilterComboBox.SelectedItem;
-            DataGridRss.ItemsSource = RssUtility.GetFeedTask(selected.Content.ToString());
+            MainWindowViewModel._animeRssInternal.Clear();
+            RssUtility.GetFeedTask(selected.Content.ToString());
         }
 
         private void textBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
@@ -88,9 +92,8 @@ namespace Anime_Downloader {
         }
 
         private void Searchrss() {
-            DataGridRss.Items.Clear();
-            DataGridRss.ItemsSource =
-                RssUtility.SearchGetFeed(Global.Rss + "&term=" + searchbox.Text.Trim().Replace(" ", "+"));
+            MainWindowViewModel._animeRssInternal.Clear();
+            RssUtility.SearchGetFeed(Global.Rss + "&term=" + searchbox.Text.Trim().Replace(" ", "+"));
         }
 
         private void button_Click_1(object sender, RoutedEventArgs e) {
@@ -99,14 +102,12 @@ namespace Anime_Downloader {
         }
 
         private void RSSBtn_Click(object sender, RoutedEventArgs e) {
-            if (Rssfeedpanel.Visibility == Visibility.Collapsed) {
+            if(!Rssfeedpanel.Visibility.Equals(Visibility.Visible)) {
                 Rssfeedpanel.Visibility = Visibility.Visible;
                 DataGridRss.Visibility = Visibility.Visible;
                 CloseStackPanel.Visibility = Visibility.Visible;
-                if (FilterComboBox.SelectedIndex.Equals(-1)) {
-                    FilterComboBox.Text = "Show all";
-                    FillRSSbox();
-                }
+                FilterComboBox.SelectedItem = FilterComboBox.Items[0];
+                FillRSSbox();
                 return;
             }
             Rssfeedpanel.Visibility = Visibility.Collapsed;
@@ -139,7 +140,6 @@ namespace Anime_Downloader {
 
         private void Refreshbtn_Click(object sender, RoutedEventArgs e) {
             FillRSSbox();
-            DataGridRss.ScrollIntoView(DataGridRss.Items[0]);
         }
 
         private void DebugBtn_Click(object sender, RoutedEventArgs e) {

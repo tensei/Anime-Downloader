@@ -31,7 +31,7 @@ namespace Anime_Downloader.Threads {
                     Settings.Default.StatusLabel = "Status: Checking in " + Global.Timer + " seconds.";
                     List<NyaaseRssViewModel> rssitems;
                     try {
-                        rssitems = Nyaase.Get_feed_titles(Global.Rss);
+                        rssitems = Nyaase.GetItems(Global.Rss);
                     }
                     catch (Exception) {
                         rssitems = new List<NyaaseRssViewModel>();

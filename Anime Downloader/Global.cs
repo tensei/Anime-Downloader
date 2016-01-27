@@ -20,6 +20,7 @@ namespace Anime_Downloader {
         public static int _timerInternal = 5;
 
         public static ObservableCollection<AnimeViewModel> Anime = MainWindowViewModel._animeInternal;
+        //public static ObservableCollection<NyaaseRssViewModel> AnimeRss = MainWindowViewModel._animeRssInternal;
         private static int _refreshTime { get; set; } = 300;
 
         public static string DoneAdd {
@@ -35,6 +36,15 @@ namespace Anime_Downloader {
                     var a = MainWindowViewModel._animeInternal;
                     if (a.Contains(value)) return;
                     a.Insert(0, value);
+                }));
+            }
+        }
+        public static NyaaseRssViewModel AnimeRssAdd {
+            set {
+                Application.Current.Dispatcher.BeginInvoke(new Action(delegate {
+                    var a = MainWindowViewModel._animeRssInternal;
+                    if (a.Contains(value)) return;
+                    a.Add(value);
                 }));
             }
         }

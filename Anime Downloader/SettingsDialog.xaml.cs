@@ -18,8 +18,10 @@ namespace Anime_Downloader {
         public SettingsDialog() {
             InitializeComponent();
             GroupsComboBox.Items.Clear();
-            foreach (var group in Global.Groups) {
-                GroupsComboBox.Items.Add(group);
+            foreach (var group in Global.Groups){
+                if (!GroupsComboBox.Items.Contains(group))                {
+                    GroupsComboBox.Items.Add(group);
+                }
             }
             if (Global.Groups.Count > 0)
                 GroupsComboBox.Text = Global.Groups[0];
@@ -118,7 +120,9 @@ namespace Anime_Downloader {
                 Global.Groups.Remove(gn);
                 GroupsComboBox.Items.Clear();
                 foreach (var group in Global.Groups) {
-                    GroupsComboBox.Items.Add(group);
+                    if (!GroupsComboBox.Items.Contains(group)) {
+                        GroupsComboBox.Items.Add(group);
+                    }
                 }
                 if (Global.Groups.Count > 0)
                     GroupsComboBox.Text = Global.Groups[0];
@@ -128,7 +132,9 @@ namespace Anime_Downloader {
         private void GroupsComboBox_DropDownOpened(object sender, EventArgs e) {
             GroupsComboBox.Items.Clear();
             foreach (var group in Global.Groups) {
-                GroupsComboBox.Items.Add(group);
+                if (!GroupsComboBox.Items.Contains(group)) {
+                    GroupsComboBox.Items.Add(group);
+                }
             }
             if (Global.Groups.Count > 0)
                 GroupsComboBox.Text = Global.Groups[0];

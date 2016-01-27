@@ -15,6 +15,8 @@ namespace Anime_Downloader {
     public class MainWindowViewModel : INotifyPropertyChanged {
         public static ObservableCollection<AnimeViewModel> _animeInternal =
             new ObservableCollection<AnimeViewModel>();
+        public static ObservableCollection<NyaaseRssViewModel> _animeRssInternal =
+            new ObservableCollection<NyaaseRssViewModel>();
 
 
         //private string _currentSite;
@@ -22,10 +24,7 @@ namespace Anime_Downloader {
 
         private readonly ThreadStart Childref;
         private readonly Thread ChildThread;
-
-        private readonly string Filepath = "AnimeDownloader.json";
-        private JObject _jsonFile;
-
+        
         public List<string> done = new List<string>();
         public List<string> groups = new List<string>();
         public List<string> last = new List<string>();
@@ -38,10 +37,11 @@ namespace Anime_Downloader {
 
         public MainWindowViewModel() {
             Animes = new ReadOnlyObservableCollection<AnimeViewModel>(_animeInternal);
+            AnimesRssFeed = new ReadOnlyObservableCollection<NyaaseRssViewModel>(_animeRssInternal);
+
             Tools.PopulateListbox();
             RefreshCommand = new ActionCommand(changeitem);
-
-            _jsonFile = JObject.Parse(File.ReadAllText(Filepath));
+            
             Childref = MainThread.CheckNow;
             ChildThread = new Thread(Childref) {IsBackground = true};
             ChildThread.Start();
@@ -50,7 +50,9 @@ namespace Anime_Downloader {
         }
 
         public ICommand RefreshCommand { get; }
+
         public ReadOnlyObservableCollection<AnimeViewModel> Animes { get; }
+        public ReadOnlyObservableCollection<NyaaseRssViewModel> AnimesRssFeed { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -62,7 +62,7 @@
             </DataGrid>
             <DataGrid x:Name="DataGridRss" AutoGenerateColumns="False" MouseDoubleClick="DataGridRss_MouseDoubleClick"
                       IsReadOnly="True" SelectionMode="Single" Background="#FF1B1B1B" Margin="0,35,0,0"
-                      Visibility="Collapsed" Grid.Row="1" GridLinesVisibility="Vertical">
+                      Visibility="Collapsed" Grid.Row="1" GridLinesVisibility="Vertical" ItemsSource="{Binding AnimesRssFeed}">
                 <DataGrid.RowStyle>
                     <Style TargetType="DataGridRow">
                         <Style.Triggers>
@@ -109,7 +109,7 @@
                         Grid.Row="1" Height="35" Visibility="Collapsed">
                 <Label x:Name="label1" Content="Filter" Margin="3,0,0,0" Foreground="#FFB6B6B6"
                        VerticalAlignment="Center" />
-                <ComboBox x:Name="FilterComboBox" Text="" Width="120" VerticalContentAlignment="Center"
+                <ComboBox x:Name="FilterComboBox" Text="Show all" Width="120" VerticalContentAlignment="Center"
                           IsReadOnly="True" SelectionChanged="textBox_SelectionChanged" VerticalAlignment="Center">
                     <ComboBoxItem Content="Show all" />
                     <ComboBoxItem Content="Filter remakes" />

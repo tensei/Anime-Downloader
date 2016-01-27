@@ -4,13 +4,37 @@ using System.Net;
 using System.ServiceModel.Syndication;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Xml;
 using Anime_Downloader.ViewModels;
 
 namespace Anime_Downloader {
     internal class Nyaase {
-        public static List<NyaaseRssViewModel> Get_feed_titles(string url) {
-            var titleurl = new List<NyaaseRssViewModel>();
+        public static void Get_feed_titles(string url) {
+            var t = new Thread(new ThreadStart(delegate {
+                foreach (var nyaaseRssViewModel in GetItems(url)) {
+                    if (!MainWindowViewModel._animeRssInternal.Contains(nyaaseRssViewModel))
+                        Global.AnimeRssAdd = nyaaseRssViewModel;
+                }
+            })) {IsBackground = true};
+            t.Start();
+        }
+
+        public static string GetStatus(string summary) {
+            if (summary.ToLower().Contains("remake")) {
+                return "remake";
+            }
+            if (summary.ToLower().Contains("a+ - trusted")) {
+                return "a+ - trusted";
+            }
+            if (summary.ToLower().Contains("trusted")) {
+                return "trusted";
+            }
+            return "normal";
+        }
+
+        public static List<NyaaseRssViewModel> GetItems(string url) {
+            var items = new List<NyaaseRssViewModel>();
             string xml;
             using (var webClient = new WebClient()) {
                 xml = Encoding.UTF8.GetString(webClient.DownloadData(url));
@@ -33,23 +57,11 @@ namespace Anime_Downloader {
                     Size = summary.Groups[4].Value,
                     Color = GetStatus(mangs.Summary.Text)
                 };
-
-                titleurl.Add(item); //"[]" +  + "[]"+ mangs.Summary.Text);
+                if (!items.Contains(item)) {
+                    items.Add(item);
+                }
             }
-            return titleurl;
-        }
-
-        public static string GetStatus(string summary) {
-            if (summary.ToLower().Contains("remake")) {
-                return "remake";
-            }
-            if (summary.ToLower().Contains("a+ - trusted")) {
-                return "a+ - trusted";
-            }
-            if (summary.ToLower().Contains("trusted")) {
-                return "trusted";
-            }
-            return "normal";
+            return items;
         }
     }
-}
+}    

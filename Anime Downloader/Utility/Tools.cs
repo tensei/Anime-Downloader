@@ -210,7 +210,7 @@ namespace Anime_Downloader.Utility {
         }
 
         public static void SaveSettings() {
-            var js = new JObject(File.ReadAllText(Filepath));
+            var js = JObject.Parse(File.ReadAllText(Filepath));
             js["Torrent_Files"] = Global.TorrentFiles;
             js["Torrent_Client"] = Global.TorrentClient;
             js["Ongoing_Folder"] = Global.OngoingFolder;
