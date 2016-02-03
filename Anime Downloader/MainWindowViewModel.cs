@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Input;
+using Anime_Downloader.Properties;
 using Anime_Downloader.Threads;
 using Anime_Downloader.Utility;
 using Anime_Downloader.ViewModels;
@@ -29,7 +30,6 @@ namespace Anime_Downloader {
         public List<string> groups = new List<string>();
         public List<string> last = new List<string>();
 
-
         public Dictionary<string, string> ongoing = new Dictionary<string, string>();
         public string Res;
 
@@ -47,6 +47,7 @@ namespace Anime_Downloader {
             ChildThread.Start();
             //ThreadStatus = "Running.";
             //CheckNow();
+            Settings.Default.Debug = "Debug shit goes in here!";
         }
 
         public ICommand RefreshCommand { get; }

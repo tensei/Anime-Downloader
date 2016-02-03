@@ -44,18 +44,18 @@ namespace Anime_Downloader {
             if (!Directory.Exists(foldertxt)) {
                 Directory.CreateDirectory(foldertxt);
             }
-            var file = Tools.DownloadFile(selectediten.Link, tf + @"\");
+            //var file = Tools.DownloadFile(selectediten.Link, tf + @"\");
             //using (var web = new WebClient())
             //{
             //    web.DownloadFile(new Uri(selectediten.Link),
             //        tf + @"\" + selectediten.Name.Replace("'", string.Empty) + @".torrent");
             //}
-            Deluge.openFeeddownload(tf, tc, file, foldertxt);
+            Deluge.openFeeddownload(tc, foldertxt, selectediten.Link);
 
             var i = new AnimeViewModel {
                 Name = selectediten.Name,
                 Added = DateTime.Now,
-                Tag = Path.Combine(foldertxt, file),
+                Tag = Path.Combine(foldertxt, item.Name),
                 Status = "Not Watched"
             };
             Global.AnimeAdd = i;

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Forms;
 using Anime_Downloader.Handlers;
@@ -24,7 +25,6 @@ namespace Anime_Downloader.Utility {
         private static readonly string Filepath = "AnimeDownloader.json";
 
         public static Dictionary<string, string> GetOnGoing() {
-            var last = new List<string>();
             var ongoing = new Dictionary<string, string>();
             //Dictionary<string, string> ongoing = new Dictionary<string, string>();
             var dirs = new List<string>(Directory.EnumerateDirectories(Global.OngoingFolder));
@@ -41,8 +41,11 @@ namespace Anime_Downloader.Utility {
                         ongoing[filn] = foldername;
                 }
                 foreach (var file in diranimefiles) {
-                    if (file.EndsWith(".mkv") || file.EndsWith(".mp4"))
-                        last.Add(file.Split(new[] {"\\"}, StringSplitOptions.None).Last());
+                    if (file.EndsWith(".mkv") || file.EndsWith(".mp4")) {
+                        var f = file.Split(new[] {"\\"}, StringSplitOptions.RemoveEmptyEntries).Last();
+                        if(!Global.AllFiles.Contains(f))
+                            Global.AllFiles.Add(f.ToLower());
+                    }
                 }
             }
             return ongoing;
@@ -187,11 +190,12 @@ namespace Anime_Downloader.Utility {
                 contentDisposition.IndexOf(contentFileNamePortion, StringComparison.InvariantCulture) +
                 contentFileNamePortion.Length;
             var originalFileNameLength = contentDisposition.Length - fileNameStartIndex;
-            var originalFileName = contentDisposition.Substring(fileNameStartIndex, originalFileNameLength);
+            //var originalFileName = contentDisposition.Substring(fileNameStartIndex, originalFileNameLength);
+            var originalFileName = Regex.Match(contentDisposition, "filename=\"(.+)\"").Groups[1].Value;
 
             //download file
             webClient.UseDefaultCredentials = true;
-            var x = originalFileName.Replace("\"", string.Empty).Replace("µ", "u");
+            var x = originalFileName.Replace("µ", "u");
             webClient.DownloadFile(url, savelocation + x);
             return x;
         }

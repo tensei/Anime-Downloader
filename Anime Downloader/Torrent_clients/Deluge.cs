@@ -5,14 +5,11 @@ using Debug = Anime_Downloader.Utility.Debug;
 
 namespace Anime_Downloader.Torrent_clients {
     internal class Deluge {
-        public static void open(Dictionary<string, string> list, string title, string filename, string torrentfiles,
-            string ongoing, string torrentclient) {
+        public static void Open(string downloadsafe, string ongoing, string torrentclient, string link) {
             var sta = new Process();
-            var torrenFile = Path.Combine(torrentfiles, title + ".torrent");
-            var downloadsafe = ongoing + @"\" + list[filename];
             //"add -p 'D:/Program Files (x86)/Deluge' 'D:/Development/python34/Anime checker/torrents/[HorribleSubs] Hibike! Euphonium - 13 [720p].mkv.torrent'"
-            var call = string.Format("\"add -p '{0}' '{1}'\"", downloadsafe,
-                torrenFile.Replace("'", string.Empty).Replace("µ", "u"));
+            Debug.Write(ongoing + @"/" + downloadsafe);
+            var call = $"\"add -p '{ongoing + @"/"+downloadsafe}' '{link}'\"";
             call = call.Replace(@"\\", "/");
             call = call.Replace(@"\", "/");
             sta.StartInfo.FileName = torrentclient;
@@ -32,13 +29,12 @@ namespace Anime_Downloader.Torrent_clients {
             sta.WaitForExit();
         }
 
-        public static void openFeeddownload(string torrentfiles, string torrentclient, string filename, string folder) {
+        public static void openFeeddownload(string torrentclient, string folder, string link) {
             var sta = new Process();
-            var torrenFile = Path.Combine(torrentfiles, filename);
             var downloadsafe = folder.Trim();
+            Debug.Write(downloadsafe);
             //"add -p 'D:/Program Files (x86)/Deluge' 'D:/Development/python34/Anime checker/torrents/[HorribleSubs] Hibike! Euphonium - 13 [720p].mkv.torrent'"
-            var call = string.Format("\"add -p '{0}' '{1}'\"", downloadsafe,
-                torrenFile.Replace("'", string.Empty).Replace("µ", "u"));
+            var call = $"\"add -p '{downloadsafe}' '{link}'\"";
             call = call.Replace(@"\\", "/");
             call = call.Replace(@"\", "/");
             sta.StartInfo.FileName = torrentclient;

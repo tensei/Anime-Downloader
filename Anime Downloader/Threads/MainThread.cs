@@ -43,36 +43,30 @@ namespace Anime_Downloader.Threads {
                             var title = item.Name;
                             var link = item.Link;
                             foreach (var filename in ongoing.Keys) {
-                                filename.Replace("Anime Koi", "Anime-Koi");
+                                filename.Replace("Anime Koi", "Anime-Koi").Replace("µ","u");
+                                title.Replace("µ", "u");
                                 switch (
                                     CheckTitleHandler.CheckTitle(title, filename)) {
                                         case "utorrent": {
-                                            client.DownloadFile(new Uri(link),
-                                                Global.TorrentFiles + @"\" + title + @".torrent");
+                                            //Tools.DownloadFile(link, Global.TorrentFiles + @"\");
                                             uTorrent.open(ongoing, title, filename, Global.TorrentFiles,
                                                 Global.OngoingFolder, Global.TorrentClient);
                                             Tools.CreateDataGridItem(title, ongoing[filename] + @"\" + title, true);
                                             Tools.showBalloon("New Anime", "Downloading\n" + title);
                                             Settings.Default.Listbox.Add(title + "[]" + ongoing[filename] + @"\" +
                                                                          title + "[]" + "true" + "\n");
-                                            Settings.Default.Save();
                                             Global.DoneAdd = title;
                                             Thread.Sleep(300);
                                             break;
                                         }
                                         case "deluge": {
-                                            client.DownloadFile(new Uri(link),
-                                                Global.TorrentFiles + @"\" + title.Replace("'", string.Empty) +
-                                                @".torrent");
-                                            Deluge.open(ongoing, title, filename, Global.TorrentFiles,
-                                                Global.OngoingFolder,
-                                                Global.TorrentClient);
+                                            //Tools.DownloadFile(link, Global.TorrentFiles + @"\");
+                                            Deluge.Open(ongoing[filename], Global.OngoingFolder, Global.TorrentClient, link);
                                             Tools.CreateDataGridItem(title.Replace("'", string.Empty),
                                                 ongoing[filename] + @"\" + title.Replace("'", string.Empty), true);
                                             Tools.showBalloon("New Anime", "Downloading\n" + title);
                                             Settings.Default.Listbox.Add(title + "[]" + ongoing[filename] + @"\" +
                                                                          title + "[]" + "true" + "\n");
-                                            Settings.Default.Save();
                                             Global.DoneAdd = title;
                                             Thread.Sleep(300);
                                             break;

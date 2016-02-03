@@ -16,6 +16,7 @@ namespace Anime_Downloader {
         private static string _rssFeed = "";
         public static List<string> Done = new List<string>();
         public static List<string> Groups = new List<string>();
+        public static List<string> AllFiles = new List<string>();
 
         public static int _timerInternal = 5;
 

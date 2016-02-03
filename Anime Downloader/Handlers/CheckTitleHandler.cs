@@ -8,7 +8,7 @@ namespace Anime_Downloader.Handlers {
             var Torrents = new List<string>(Directory.EnumerateFiles(Global.TorrentFiles));
             if (title.Contains(filename) && title.Contains(Global.Resolution) &&
                 !title.ToLower().Contains("batch")) {
-                if (!Torrents.Contains(Global.TorrentFiles + @"\" + title + @".torrent") &&
+                if (!Global.AllFiles.Contains(title.ToLower()) &&
                     !Global.Done.Contains(title)) {
                     //download file and add it to torrent downloader
                     if (Global.TorrentClient.ToLower().Contains("utorrent")) {
@@ -25,7 +25,7 @@ namespace Anime_Downloader.Handlers {
             }
             else if (title.Contains(filename) && Global.Groups.Contains(title.Substring(0, 4)) &&
                      !title.ToLower().Contains("batch")) {
-                if (!Torrents.Contains(Global.TorrentFiles + @"\" + title + @".torrent") && !Global.Done.Contains(title)) {
+                if (!Global.AllFiles.Contains(title.ToLower()) && !Global.Done.Contains(title)) {
                     //download file and add it to torrent downloader
                     if (Global.TorrentClient.ToLower().Contains("utorrent")) {
                         if (Tools.FillProcessList().Contains("utorrent")) {
