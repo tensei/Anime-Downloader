@@ -9,7 +9,7 @@ namespace Anime_Downloader.Torrent_clients {
             var sta = new Process();
             //"add -p 'D:/Program Files (x86)/Deluge' 'D:/Development/python34/Anime checker/torrents/[HorribleSubs] Hibike! Euphonium - 13 [720p].mkv.torrent'"
             Debug.Write(ongoing + @"/" + downloadsafe);
-            var call = $"\"add -p '{ongoing + @"/"+downloadsafe}' '{link}'\"";
+            var call = $"\"add -p '{ongoing + @"/"+downloadsafe}' '{link.Replace("https", "http")}'\"";
             call = call.Replace(@"\\", "/");
             call = call.Replace(@"\", "/");
             sta.StartInfo.FileName = torrentclient;
@@ -34,7 +34,7 @@ namespace Anime_Downloader.Torrent_clients {
             var downloadsafe = folder.Trim();
             Debug.Write(downloadsafe);
             //"add -p 'D:/Program Files (x86)/Deluge' 'D:/Development/python34/Anime checker/torrents/[HorribleSubs] Hibike! Euphonium - 13 [720p].mkv.torrent'"
-            var call = $"\"add -p '{downloadsafe}' '{link}'\"";
+            var call = $"\"add -p '{downloadsafe}' '{link.Replace("https", "http")}'\"";
             call = call.Replace(@"\\", "/");
             call = call.Replace(@"\", "/");
             sta.StartInfo.FileName = torrentclient;
